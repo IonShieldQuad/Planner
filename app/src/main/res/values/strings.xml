@@ -139,4 +139,9 @@
     <string name="plan_id_label">"Plan: "</string>
     <string name="event_id_label">"Event: "</string>
     <string name="event_assoc_title">Event Assoc.</string>
+    <string name="finder_title">Find</string>
+    <string name="your_location_label">Your location: </string>
+    <string name="find_button_label">Find</string>
+    <string name="no_locations_found_message">No locations found</string>
+    <string name="location_found_message">Closest location: \"%1$s\" \n at (%2$f; %3$f)</string>
 </resources>

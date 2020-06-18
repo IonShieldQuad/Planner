@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void useButtonClicked(View view) {
+        Intent intent = new Intent(this,LocationFinderActivity.class);
+        startActivity(intent);
     }
 
     public void databaseButtonClicked(View view) {

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.database.editors.EventAssocEditActivity"></activity>
+        <activity android:name=".activities.LocationFinderActivity"></activity>
+        <activity android:name=".activities.database.editors.EventAssocEditActivity" />
         <activity android:name=".activities.database.editors.PlansEditActivity" />
         <activity android:name=".activities.database.editors.EventsEditActivity" />
         <activity android:name=".activities.database.ListActivity" />
