@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.database.editors.EventsEditActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="start"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:textSize="32sp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/name"
+                android:labelFor="@+id/name_field"
+                />
+            <EditText
+                android:id="@+id/name_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:text=""
+                android:autofillHints="name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/description"
+                android:gravity="top"
+                android:labelFor="@+id/desc_field"
+                />
+            <EditText
+                android:id="@+id/desc_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:text=""
+                android:autofillHints="description" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/item_id_label"
+                android:labelFor="@+id/item_id_field"
+                />
+            <EditText
+                android:id="@+id/item_id_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:text=""
+                android:autofillHints="type_id" />
+            <Button
+                android:id="@+id/types_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="browseItems"
+                android:text="@string/browse_button_label"
+                android:layout_gravity="end|center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/datetime_min_label"
+                />
+
+            <EditText
+                android:id="@+id/time_min_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="time"
+                android:text=""
+                android:hint="@string/time_hint"
+                android:autofillHints="time_min" />
+
+            <Button
+                android:id="@+id/time_min_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="pickMinTime"
+                android:text="@string/pick_time_label"
+                android:layout_gravity="end|center_vertical" />
+
+            <EditText
+                android:id="@+id/date_min_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="date"
+                android:text=""
+                android:hint="@string/date_hint"
+                android:autofillHints="time_min" />
+
+            <Button
+                android:id="@+id/date_min_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="pickMinDate"
+                android:text="@string/pick_date_label"
+                android:layout_gravity="end|center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/datetime_max_label"
+                />
+            <EditText
+                android:id="@+id/time_max_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="time"
+                android:text=""
+                android:hint="@string/time_hint"
+                android:autofillHints="time_max" />
+
+            <Button
+                android:id="@+id/time_max_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="pickMaxTime"
+                android:text="@string/pick_time_label"
+                android:layout_gravity="end|center_vertical" />
+
+            <EditText
+                android:id="@+id/date_max_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="date"
+                android:text=""
+                android:hint="@string/date_hint"
+                android:autofillHints="date_max" />
+
+            <Button
+                android:id="@+id/date_max_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="pickMaxDate"
+                android:text="@string/pick_date_label"
+                android:layout_gravity="end|center_vertical" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/use_date_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_date_checkbox_label"
+            android:checked="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:textSize="24sp"
+            android:layout_gravity="bottom|end"
+            android:onClick="confirmButtonClicked"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
