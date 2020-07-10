@@ -13,7 +13,7 @@ import androidx.arch.core.util.Function;
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.BaseAdapter;
 import com.ionshield.planner.activities.database.editors.TypesEditActivity;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 
 public class TypesMode implements Mode {
     @Override
@@ -42,12 +42,12 @@ public class TypesMode implements Mode {
 
     @Override
     public Cursor queryAll(SQLiteDatabase db) {
-        return db.rawQuery("SELECT * FROM " + DatabaseContract.Types.TABLE_NAME + ";", new String[]{});
+        return db.rawQuery("SELECT * FROM " + DBC.Types.TABLE_NAME + ";", new String[]{});
     }
 
     @Override
     public Cursor querySearch(SQLiteDatabase db, String searchString) {
-        return db.rawQuery("SELECT * FROM " + DatabaseContract.Types.TABLE_NAME + " WHERE " + DatabaseContract.Types.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
+        return db.rawQuery("SELECT * FROM " + DBC.Types.TABLE_NAME + " WHERE " + DBC.Types.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
     }
 
     @Override
@@ -66,9 +66,9 @@ public class TypesMode implements Mode {
         TextView colorView = view.findViewById(R.id.color);
         TextView nameView = view.findViewById(R.id.name);
 
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Types._ID));
-        String name = cursor.getString((cursor.getColumnIndexOrThrow(DatabaseContract.Types.NAME)));
-        int color = cursor.getInt((cursor.getColumnIndexOrThrow(DatabaseContract.Types.COLOR)));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Types._ID));
+        String name = cursor.getString((cursor.getColumnIndexOrThrow(DBC.Types.NAME)));
+        int color = cursor.getInt((cursor.getColumnIndexOrThrow(DBC.Types.COLOR)));
 
         idView.setText(String.valueOf(id));
         colorView.setBackgroundColor(color + 0xFF000000);
@@ -77,6 +77,6 @@ public class TypesMode implements Mode {
 
     @Override
     public String getTableName() {
-        return DatabaseContract.Types.TABLE_NAME;
+        return DBC.Types.TABLE_NAME;
     }
 }

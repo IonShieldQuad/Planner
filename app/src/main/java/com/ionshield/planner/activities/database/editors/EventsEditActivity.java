@@ -1,9 +1,5 @@
 package com.ionshield.planner.activities.database.editors;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -12,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -20,16 +17,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.modes.Modes;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 import com.ionshield.planner.database.DatabaseHelper;
 import com.ionshield.planner.fragments.DatePickerFragment;
+import com.ionshield.planner.fragments.DurationPickerFragment;
 import com.ionshield.planner.fragments.TimePickerFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -55,19 +56,20 @@ public class EventsEditActivity extends AppCompatActivity {
             title.setText(R.string.edit);
 
             try {
-                Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Events.TABLE_NAME + " WHERE " + DatabaseContract.Events._ID + "=?;", new String[]{String.valueOf(id)});
+                Cursor cursor = db.rawQuery("SELECT * FROM " + DBC.Events.TABLE_NAME + " WHERE " + DBC.Events._ID + "=?;", new String[]{String.valueOf(id)});
 
                 cursor.moveToFirst();
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Events.NAME));
-                String desc = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Events.DESC));
-                int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Events.ITEM_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Events.NAME));
+                String desc = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Events.DESC));
+                int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Events.ITEM_ID));
+                long duration = cursor.getLong(cursor.getColumnIndexOrThrow(DBC.Events.DURATION));
 
                 DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
                 DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
 
-                boolean useDate = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Events.IS_DATE_USED)) != 0;
-                int datetimeMinIndex = cursor.getColumnIndex(DatabaseContract.Events.DATETIME_MIN);
-                int datetimeMaxIndex = cursor.getColumnIndex(DatabaseContract.Events.DATETIME_MAX);
+                boolean useDate = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Events.IS_DATE_USED)) != 0;
+                int datetimeMinIndex = cursor.getColumnIndex(DBC.Events.DATETIME_MIN);
+                int datetimeMaxIndex = cursor.getColumnIndex(DBC.Events.DATETIME_MAX);
                 String timeMin = "";
                 String timeMax = "";
                 String dateMin = "";
@@ -99,6 +101,7 @@ public class EventsEditActivity extends AppCompatActivity {
                 TextView dateMinView = findViewById(R.id.date_min_field);
                 TextView dateMaxView = findViewById(R.id.date_max_field);
                 CheckBox checkBox = findViewById(R.id.use_date_checkbox);
+                EditText durationField = findViewById(R.id.duration_field);
 
                 nameField.setText(name);
                 descField.setText(desc);
@@ -108,6 +111,7 @@ public class EventsEditActivity extends AppCompatActivity {
                 dateMinView.setText(dateMin);
                 dateMaxView.setText(dateMax);
                 checkBox.setChecked(useDate);
+                durationField.setText(String.valueOf(duration));
 
                 cursor.close();
             }
@@ -129,7 +133,7 @@ public class EventsEditActivity extends AppCompatActivity {
         EditText timeMaxField = findViewById(R.id.time_max_field);
         EditText dateMaxField = findViewById(R.id.date_max_field);
         CheckBox checkBox = findViewById(R.id.use_date_checkbox);
-
+        EditText durationField = findViewById(R.id.duration_field);
 
         String name = nameField.getText().toString();
         String desc = descField.getText().toString();
@@ -139,13 +143,14 @@ public class EventsEditActivity extends AppCompatActivity {
         String dateMaxString = dateMaxField.getText().toString();
         boolean useDate = checkBox.isChecked();
 
-
         int itemId;
+        long duration;
         Long datetimeMin = 0L;
         Long datetimeMax = 0L;
 
         try {
             itemId = Integer.parseInt(itemIdField.getText().toString());
+            duration = Long.parseLong(durationField.getText().toString());
         }
         catch (NumberFormatException e) {
             Toast.makeText(this, R.string.number_format_error_message, Toast.LENGTH_LONG).show();
@@ -224,7 +229,7 @@ public class EventsEditActivity extends AppCompatActivity {
 
         try {
             if (id >= 0) {
-                SQLiteStatement stmt = db.compileStatement("UPDATE " + DatabaseContract.Events.TABLE_NAME + " SET " + DatabaseContract.Events.NAME + "=?, " + DatabaseContract.Events.DESC + "=?, " + DatabaseContract.Events.ITEM_ID + "=?, " + DatabaseContract.Events.DATETIME_MIN + "=?, " + DatabaseContract.Events.DATETIME_MAX + "=?, " + DatabaseContract.Events.IS_DATE_USED + "=? WHERE " + DatabaseContract.Items._ID + "=?;");
+                SQLiteStatement stmt = db.compileStatement("UPDATE " + DBC.Events.TABLE_NAME + " SET " + DBC.Events.NAME + "=?, " + DBC.Events.DESC + "=?, " + DBC.Events.ITEM_ID + "=?, " + DBC.Events.DATETIME_MIN + "=?, " + DBC.Events.DATETIME_MAX + "=?, " + DBC.Events.IS_DATE_USED + "=?, " + DBC.Events.DURATION + "=? WHERE " + BaseColumns._ID + "=?;");
                 stmt.bindString(1, name);
                 stmt.bindString(2, desc);
                 stmt.bindLong(3, itemId);
@@ -241,10 +246,11 @@ public class EventsEditActivity extends AppCompatActivity {
                     stmt.bindLong(5, datetimeMax);
                 }
                 stmt.bindLong(6, useDate ? 1 : 0);
-                stmt.bindLong(7, id);
+                stmt.bindLong(7, duration);
+                stmt.bindLong(8, id);
                 stmt.executeUpdateDelete();
             } else {
-                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DatabaseContract.Events.TABLE_NAME + " (" + DatabaseContract.Events.NAME + ", " + DatabaseContract.Events.DESC + ", " + DatabaseContract.Events.ITEM_ID + ", " + DatabaseContract.Events.DATETIME_MIN + ", " + DatabaseContract.Events.DATETIME_MAX + ", " + DatabaseContract.Events.IS_DATE_USED + ") VALUES (?, ?, ?, ?, ?, ?);");
+                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DBC.Events.TABLE_NAME + " (" + DBC.Events.NAME + ", " + DBC.Events.DESC + ", " + DBC.Events.ITEM_ID + ", " + DBC.Events.DATETIME_MIN + ", " + DBC.Events.DATETIME_MAX + ", " + DBC.Events.IS_DATE_USED + ", " + DBC.Events.DURATION + ") VALUES (?, ?, ?, ?, ?, ?, ?);");
                 stmt.bindString(1, name);
                 stmt.bindString(2, desc);
                 stmt.bindLong(3, itemId);
@@ -261,6 +267,7 @@ public class EventsEditActivity extends AppCompatActivity {
                     stmt.bindLong(5, datetimeMax);
                 }
                 stmt.bindLong(6, useDate ? 1 : 0);
+                stmt.bindLong(7, duration);
                 stmt.executeInsert();
             }
             finish();
@@ -350,4 +357,18 @@ public class EventsEditActivity extends AppCompatActivity {
         });
         newFragment.show(getSupportFragmentManager(), "dateMaxPicker");
     }
+
+    public void pickDuration(View view) {
+        DialogFragment newFragment = new DurationPickerFragment(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                EditText durationField = findViewById(R.id.duration_field);
+                durationField.setText(String.valueOf(60 * hour + minute));
+            }
+        });
+        newFragment.show(getSupportFragmentManager(), "timeMaxPicker");
+    }
+
+
+
 }

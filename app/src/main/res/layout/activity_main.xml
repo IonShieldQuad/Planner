@@ -50,7 +50,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
                     android:onClick="useButtonClicked"
-                    android:text="@string/use_planner_button_label"
+                    android:text="@string/location_finder_button_label"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/path_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:onClick="pathButtonClicked"
+                    android:text="@string/path_button_label"
                     android:textSize="30sp" />
 
                 <Button
@@ -60,11 +69,7 @@
                     android:layout_marginTop="30dp"
                     android:onClick="databaseButtonClicked"
                     android:text="@string/database_button_label"
-                    android:textSize="30sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/use_planner_button" />
+                    android:textSize="30sp" />
             </LinearLayout>
         </ScrollView>
 

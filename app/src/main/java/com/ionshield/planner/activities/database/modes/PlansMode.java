@@ -12,9 +12,8 @@ import androidx.arch.core.util.Function;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.BaseAdapter;
-import com.ionshield.planner.activities.database.editors.ItemsEditActivity;
 import com.ionshield.planner.activities.database.editors.PlansEditActivity;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 
 public class PlansMode implements Mode {
     @Override
@@ -43,12 +42,12 @@ public class PlansMode implements Mode {
 
     @Override
     public Cursor queryAll(SQLiteDatabase db) {
-        return db.rawQuery("SELECT * FROM " + DatabaseContract.Plans.TABLE_NAME + ";", new String[]{});
+        return db.rawQuery("SELECT * FROM " + DBC.Plans.TABLE_NAME + ";", new String[]{});
     }
 
     @Override
     public Cursor querySearch(SQLiteDatabase db, String searchString) {
-        return db.rawQuery("SELECT * FROM " + DatabaseContract.Plans.TABLE_NAME + " WHERE " + DatabaseContract.Plans.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
+        return db.rawQuery("SELECT * FROM " + DBC.Plans.TABLE_NAME + " WHERE " + DBC.Plans.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
     }
 
     @Override
@@ -65,14 +64,14 @@ public class PlansMode implements Mode {
     public void bindCursorData(View view, Context context, Cursor cursor) {
         TextView idView = view.findViewById(R.id.id);
         TextView nameView = view.findViewById(R.id.name);
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Items._ID));
-        String name = cursor.getString((cursor.getColumnIndexOrThrow(DatabaseContract.Items.NAME)));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Items._ID));
+        String name = cursor.getString((cursor.getColumnIndexOrThrow(DBC.Items.NAME)));
         idView.setText(String.valueOf(id));
         nameView.setText(name);
     }
 
     @Override
     public String getTableName() {
-        return DatabaseContract.Plans.TABLE_NAME;
+        return DBC.Plans.TABLE_NAME;
     }
 }

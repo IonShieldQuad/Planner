@@ -1,20 +1,19 @@
 package com.ionshield.planner.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.modes.Modes;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 import com.ionshield.planner.database.DatabaseHelper;
 
 public class LocationFinderActivity extends AppCompatActivity {
@@ -48,29 +47,36 @@ public class LocationFinderActivity extends AppCompatActivity {
             return;
         }
 
-        Cursor cursor = db.rawQuery("SELECT " + DatabaseContract.Locations.TABLE_NAME +".*, MIN("
-                        + "(" + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_X + " - " + "?)" + " * "
-                        + "(" + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_X + " - " + "?)" + " + "
-                        + "(" + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_Y + " - " + "?)" + " * "
-                        + "(" + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_Y + " - " + "?)" + ")"
-                        + " FROM " + DatabaseContract.Locations.TABLE_NAME + ", "
-                        + DatabaseContract.Events.TABLE_NAME + ", "
-                        + DatabaseContract.ItemTypeAssoc.TABLE_NAME
-                        + " WHERE " + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events._ID + "=?"
-                        + " AND "+ DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.ITEM_ID + "="
-                        + DatabaseContract.ItemTypeAssoc.TABLE_NAME + "." + DatabaseContract.ItemTypeAssoc.ITEM_ID
-                        + " AND " + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.TYPE_ID + "="
-                        + DatabaseContract.ItemTypeAssoc.TABLE_NAME + "." + DatabaseContract.ItemTypeAssoc.TYPE_ID + ";",
+        Cursor cursor = db.rawQuery("SELECT " + DBC.Locations.TABLE_NAME +".*, "
+                        + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " AS x, "
+                        + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " AS y, "
+                        + "MIN("
+                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " * "
+                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " + "
+                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + " * "
+                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + ")"
+                        + " FROM " + DBC.Locations.TABLE_NAME + ", "
+                        + DBC.Events.TABLE_NAME + ", "
+                        + DBC.ItemTypeAssoc.TABLE_NAME + ", "
+                        + DBC.Nodes.TABLE_NAME
+                        + " WHERE " + DBC.Events.TABLE_NAME + "." + DBC.Events._ID + "=?"
+                        + " AND "+ DBC.Events.TABLE_NAME + "." + DBC.Events.ITEM_ID + "="
+                        + DBC.ItemTypeAssoc.TABLE_NAME + "." + DBC.ItemTypeAssoc.ITEM_ID
+                        + " AND " + DBC.Locations.TABLE_NAME + "." + DBC.Locations.TYPE_ID + "="
+                        + DBC.ItemTypeAssoc.TABLE_NAME + "." + DBC.ItemTypeAssoc.TYPE_ID
+                        + " AND " + DBC.Locations.NODE_ID + "="
+                        + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes._ID
+                        + ";",
                 new String[]{String.valueOf(coordinateX), String.valueOf(coordinateX), String.valueOf(coordinateY), String.valueOf(coordinateY), String.valueOf(eventId)});
         cursor.moveToFirst();
-        if (cursor.getCount() == 0 || cursor.isNull(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.NAME))) {
+        if (cursor.getCount() == 0 || cursor.isNull(cursor.getColumnIndexOrThrow(DBC.Locations.NAME))) {
             Toast.makeText(this, R.string.no_locations_found_message, Toast.LENGTH_LONG).show();
         }
         else {
             cursor.moveToFirst();
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.NAME));
-            double x = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.COORDINATE_X));
-            double y = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.COORDINATE_Y));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Locations.NAME));
+            double x = cursor.getDouble(cursor.getColumnIndexOrThrow("x"));
+            double y = cursor.getDouble(cursor.getColumnIndexOrThrow("y"));
             Toast.makeText(this, getString(R.string.location_found_message, name, x, y), Toast.LENGTH_LONG).show();
         }
         cursor.close();

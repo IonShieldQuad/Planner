@@ -72,6 +72,15 @@
                     android:textSize="30sp" />
 
                 <Button
+                    android:id="@+id/nodes_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:onClick="nodesButtonClicked"
+                    android:text="@string/nodes_button_label"
+                    android:textSize="30sp" />
+
+                <Button
                     android:id="@+id/locations_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -105,6 +114,24 @@
                     android:layout_marginTop="30dp"
                     android:onClick="eventAssocButtonClicked"
                     android:text="@string/event_assoc_button_label"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/link_types_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:onClick="linkTypesButtonClicked"
+                    android:text="@string/link_types_button_label"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/links_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:onClick="linksButtonClicked"
+                    android:text="@string/links_button_label"
                     android:textSize="30sp" />
 
             </LinearLayout>

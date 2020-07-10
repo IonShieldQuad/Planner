@@ -14,7 +14,7 @@ import androidx.arch.core.util.Function;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.modes.Mode;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 import com.ionshield.planner.database.DatabaseHelper;
 
 public class BaseAdapter extends CursorAdapter {
@@ -41,7 +41,7 @@ public class BaseAdapter extends CursorAdapter {
     public void bindView(final View view, final Context context, Cursor cursor) {
         mode.bindCursorData(view, context, cursor);
 
-        final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Items._ID));
+        final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Items._ID));
 
         if (isSelector) {
             Button selectButton = view.findViewById(R.id.select_button);

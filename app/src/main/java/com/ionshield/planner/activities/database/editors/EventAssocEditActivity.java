@@ -1,22 +1,23 @@
 package com.ionshield.planner.activities.database.editors;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.modes.Modes;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 import com.ionshield.planner.database.DatabaseHelper;
 
 public class EventAssocEditActivity extends AppCompatActivity {
@@ -43,14 +44,14 @@ public class EventAssocEditActivity extends AppCompatActivity {
             title.setText(R.string.edit);
 
             try {
-                Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.EventPlanAssoc.TABLE_NAME + " WHERE " + DatabaseContract.EventPlanAssoc._ID + "=?;", new String[]{String.valueOf(id)});
+                Cursor cursor = db.rawQuery("SELECT * FROM " + DBC.EventPlanAssoc.TABLE_NAME + " WHERE " + DBC.EventPlanAssoc._ID + "=?;", new String[]{String.valueOf(id)});
 
                 cursor.moveToFirst();
-                int eventId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.EventPlanAssoc.EVENT_ID));
-                int planId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.EventPlanAssoc.PLAN_ID));
+                int eventId = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.EventPlanAssoc.EVENT_ID));
+                int planId = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.EventPlanAssoc.PLAN_ID));
 
-                EditText eventIdField = (EditText) fields[0];
-                EditText planIdField = (EditText) fields[1];
+                EditText eventIdField = fields[0];
+                EditText planIdField = fields[1];
 
                 eventIdField.setText(String.valueOf(eventId));
                 planIdField.setText(String.valueOf(planId));
@@ -83,13 +84,13 @@ public class EventAssocEditActivity extends AppCompatActivity {
 
         try {
             if (id >= 0) {
-                SQLiteStatement stmt = db.compileStatement("UPDATE " + DatabaseContract.EventPlanAssoc.TABLE_NAME + " SET " + DatabaseContract.EventPlanAssoc.EVENT_ID + "=?, " + DatabaseContract.EventPlanAssoc.PLAN_ID + "=? WHERE " + DatabaseContract.Items._ID + "=?;");
+                SQLiteStatement stmt = db.compileStatement("UPDATE " + DBC.EventPlanAssoc.TABLE_NAME + " SET " + DBC.EventPlanAssoc.EVENT_ID + "=?, " + DBC.EventPlanAssoc.PLAN_ID + "=? WHERE " + BaseColumns._ID + "=?;");
                 stmt.bindLong(1, eventId);
                 stmt.bindLong(2, planId);
                 stmt.bindLong(3, id);
                 stmt.executeUpdateDelete();
             } else {
-                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DatabaseContract.EventPlanAssoc.TABLE_NAME + " (" + DatabaseContract.EventPlanAssoc.EVENT_ID + ", " + DatabaseContract.EventPlanAssoc.PLAN_ID + ") VALUES (?, ?);");
+                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DBC.EventPlanAssoc.TABLE_NAME + " (" + DBC.EventPlanAssoc.EVENT_ID + ", " + DBC.EventPlanAssoc.PLAN_ID + ") VALUES (?, ?);");
                 stmt.bindLong(1, eventId);
                 stmt.bindLong(2, planId);
                 stmt.executeInsert();

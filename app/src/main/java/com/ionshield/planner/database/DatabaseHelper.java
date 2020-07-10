@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "PlanningDatabase.db";
 
     public DatabaseHelper(Context context) {
@@ -29,33 +29,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DatabaseContract.SQL_CREATE_ITEMS);
-        db.execSQL(DatabaseContract.SQL_CREATE_TYPES);
-        db.execSQL(DatabaseContract.SQL_CREATE_ITEM_ASSOC);
-        db.execSQL(DatabaseContract.SQL_CREATE_LOCATIONS);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENTS);
-        db.execSQL(DatabaseContract.SQL_CREATE_PLANS);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENT_ASSOC);
+        db.execSQL(DBC.SQL_CREATE_ITEMS);
+        db.execSQL(DBC.SQL_CREATE_TYPES);
+        db.execSQL(DBC.SQL_CREATE_ITEM_ASSOC);
+        db.execSQL(DBC.SQL_CREATE_NODES);
+        db.execSQL(DBC.SQL_CREATE_LOCATIONS);
+        db.execSQL(DBC.SQL_CREATE_EVENTS);
+        db.execSQL(DBC.SQL_CREATE_PLANS);
+        db.execSQL(DBC.SQL_CREATE_EVENT_ASSOC);
+        db.execSQL(DBC.SQL_CREATE_LINK_TYPES);
+        db.execSQL(DBC.SQL_CREATE_LINKS);
 
-        db.execSQL(DatabaseContract.SQL_CREATE_ITEMS_INDEX_NAME);
-        db.execSQL(DatabaseContract.SQL_CREATE_TYPES_INDEX_NAME);
-        db.execSQL(DatabaseContract.SQL_CREATE_ITEM_ASSOC_INDEX_ITEM_ID);
-        db.execSQL(DatabaseContract.SQL_CREATE_ITEM_ASSOC_INDEX_TYPE_ID);
-        db.execSQL(DatabaseContract.SQL_CREATE_LOCATIONS_INDEX_NAME);
-        db.execSQL(DatabaseContract.SQL_CREATE_LOCATIONS_INDEX_TYPE_ID);
-        db.execSQL(DatabaseContract.SQL_CREATE_LOCATIONS_INDEX_COORDINATE_X);
-        db.execSQL(DatabaseContract.SQL_CREATE_LOCATIONS_INDEX_COORDINATE_Y);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENTS_INDEX_NAME);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENTS_INDEX_ITEM_ID);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENTS_INDEX_DATETIME_MIN);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENTS_INDEX_DATETIME_MAX);
-        db.execSQL(DatabaseContract.SQL_CREATE_PLANS_INDEX_NAME);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENT_ASSOC_INDEX_EVENT_ID);
-        db.execSQL(DatabaseContract.SQL_CREATE_EVENT_ASSOC_INDEX_PLAN_ID);
+        db.execSQL(DBC.SQL_CREATE_ITEMS_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_TYPES_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_ITEM_ASSOC_INDEX_ITEM_ID);
+        db.execSQL(DBC.SQL_CREATE_ITEM_ASSOC_INDEX_TYPE_ID);
+        db.execSQL(DBC.SQL_CREATE_NODES_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_NODES_INDEX_COORDINATE_X);
+        db.execSQL(DBC.SQL_CREATE_NODES_INDEX_COORDINATE_Y);
+        db.execSQL(DBC.SQL_CREATE_LOCATIONS_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_LOCATIONS_INDEX_TYPE_ID);
+        db.execSQL(DBC.SQL_CREATE_LOCATIONS_INDEX_NODE_ID);
+        db.execSQL(DBC.SQL_CREATE_EVENTS_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_EVENTS_INDEX_ITEM_ID);
+        db.execSQL(DBC.SQL_CREATE_EVENTS_INDEX_DATETIME_MIN);
+        db.execSQL(DBC.SQL_CREATE_EVENTS_INDEX_DATETIME_MAX);
+        db.execSQL(DBC.SQL_CREATE_PLANS_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_EVENT_ASSOC_INDEX_EVENT_ID);
+        db.execSQL(DBC.SQL_CREATE_EVENT_ASSOC_INDEX_PLAN_ID);
+        db.execSQL(DBC.SQL_CREATE_LINK_TYPES_INDEX_NAME);
+        db.execSQL(DBC.SQL_CREATE_LINK_TYPES_INDEX_SPEED);
+        db.execSQL(DBC.SQL_CREATE_LINKS_INDEX_FROM_NODE_ID);
+        db.execSQL(DBC.SQL_CREATE_LINKS_INDEX_TO_NODE_ID);
+        db.execSQL(DBC.SQL_CREATE_LINKS_INDEX_LINK_TYPE_ID);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion == 1 && newVersion == 2) {
+            db.execSQL("DROP TABLE IF EXISTS " + DBC.Locations.TABLE_NAME + ";");
+            onCreate(db);
+            db.execSQL("ALTER TABLE " + DBC.Events.TABLE_NAME + " ADD " + DBC.Events.DURATION + " INTEGER NOT NULL DEFAULT 0;");
+        }
     }
 
     @Override

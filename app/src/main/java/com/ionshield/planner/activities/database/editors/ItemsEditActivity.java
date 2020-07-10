@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ionshield.planner.R;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 import com.ionshield.planner.database.DatabaseHelper;
 
 
@@ -38,11 +39,11 @@ public class ItemsEditActivity extends AppCompatActivity {
             title.setText(R.string.edit);
 
             try {
-                Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Items.TABLE_NAME + " WHERE " + DatabaseContract.Items._ID + "=?;", new String[]{String.valueOf(id)});
+                Cursor cursor = db.rawQuery("SELECT * FROM " + DBC.Items.TABLE_NAME + " WHERE " + DBC.Items._ID + "=?;", new String[]{String.valueOf(id)});
 
                 cursor.moveToFirst();
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Items.NAME));
-                String desc = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Items.DESC));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Items.NAME));
+                String desc = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Items.DESC));
 
                 EditText nameField = findViewById(R.id.name_field);
                 EditText descField = findViewById(R.id.desc_field);
@@ -70,13 +71,13 @@ public class ItemsEditActivity extends AppCompatActivity {
 
         try {
             if (id >= 0) {
-                SQLiteStatement stmt = db.compileStatement("UPDATE " + DatabaseContract.Items.TABLE_NAME + " SET " + DatabaseContract.Items.NAME + "=?, " + DatabaseContract.Items.DESC + "=? WHERE " + DatabaseContract.Items._ID + "=?;");
+                SQLiteStatement stmt = db.compileStatement("UPDATE " + DBC.Items.TABLE_NAME + " SET " + DBC.Items.NAME + "=?, " + DBC.Items.DESC + "=? WHERE " + BaseColumns._ID + "=?;");
                 stmt.bindString(1, name);
                 stmt.bindString(2, desc);
                 stmt.bindLong(3, id);
                 stmt.executeUpdateDelete();
             } else {
-                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DatabaseContract.Items.TABLE_NAME + " (" + DatabaseContract.Items.NAME + ", " + DatabaseContract.Items.DESC + ") VALUES (?, ?);");
+                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DBC.Items.TABLE_NAME + " (" + DBC.Items.NAME + ", " + DBC.Items.DESC + ") VALUES (?, ?);");
                 stmt.bindString(1, name);
                 stmt.bindString(2, desc);
                 stmt.executeInsert();

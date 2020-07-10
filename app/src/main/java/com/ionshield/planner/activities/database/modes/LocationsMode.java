@@ -13,7 +13,7 @@ import androidx.arch.core.util.Function;
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.BaseAdapter;
 import com.ionshield.planner.activities.database.editors.LocationsEditActivity;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 
 public class LocationsMode implements Mode {
     @Override
@@ -32,26 +32,31 @@ public class LocationsMode implements Mode {
 
     @Override
     public Cursor queryAll(SQLiteDatabase db) {
-        return db.rawQuery("SELECT " + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations._ID + ", "
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.NAME + ", "
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_X + ", "
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_Y + ", "
-                + DatabaseContract.Types.TABLE_NAME + "." + DatabaseContract.Types.NAME + " AS type FROM " + DatabaseContract.Locations.TABLE_NAME
-                + " JOIN " + DatabaseContract.Types.TABLE_NAME + " ON " + DatabaseContract.Types. TABLE_NAME + "." + DatabaseContract.Types._ID + "="
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.TYPE_ID + ";", new String[]{});
+        return db.rawQuery("SELECT " + DBC.Locations.TABLE_NAME + "." + DBC.Locations._ID + ", "
+                + DBC.Locations.TABLE_NAME + "." + DBC.Locations.NAME + ", "
+                + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " AS x, "
+                + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " AS y, "
+                + DBC.Types.TABLE_NAME + "." + DBC.Types.NAME + " AS type FROM " + DBC.Locations.TABLE_NAME
+                + " JOIN " + DBC.Types.TABLE_NAME + " ON " + DBC.Types.TABLE_NAME + "." + DBC.Types._ID + "="
+                + DBC.Locations.TABLE_NAME + "." + DBC.Locations.TYPE_ID
+                + " LEFT JOIN " + DBC.Nodes.TABLE_NAME + " ON " + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes._ID + "="
+                + DBC.Locations.TABLE_NAME + "." + DBC.Locations.NODE_ID
+                + ";", new String[]{});
         //return db.rawQuery("SELECT * FROM " + DatabaseContract.Locations.TABLE_NAME + ";", new String[]{});
     }
 
     @Override
     public Cursor querySearch(SQLiteDatabase db, String searchString) {
-        return db.rawQuery("SELECT " + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations._ID + ", "
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.NAME + ", "
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_X + ", "
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.COORDINATE_Y + ", "
-                + DatabaseContract.Types.TABLE_NAME + "." + DatabaseContract.Types.NAME + " AS type FROM " + DatabaseContract.Locations.TABLE_NAME
-                + " JOIN " + DatabaseContract.Types.TABLE_NAME + " ON " + DatabaseContract.Types. TABLE_NAME + "." + DatabaseContract.Types._ID + "="
-                + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.TYPE_ID
-                + " WHERE " + DatabaseContract.Locations.TABLE_NAME + "." + DatabaseContract.Locations.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
+        return db.rawQuery("SELECT " + DBC.Locations.TABLE_NAME + "." + DBC.Locations._ID + ", "
+                + DBC.Locations.TABLE_NAME + "." + DBC.Locations.NAME + ", "
+                + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " AS x, "
+                + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " AS y, "
+                + DBC.Types.TABLE_NAME + "." + DBC.Types.NAME + " AS type FROM " + DBC.Locations.TABLE_NAME
+                + " JOIN " + DBC.Types.TABLE_NAME + " ON " + DBC.Types.TABLE_NAME + "." + DBC.Types._ID + "="
+                + DBC.Locations.TABLE_NAME + "." + DBC.Locations.TYPE_ID
+                + " LEFT JOIN " + DBC.Nodes.TABLE_NAME + " ON " + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes._ID + "="
+                + DBC.Locations.TABLE_NAME + "." + DBC.Locations.NODE_ID
+                + " WHERE " + DBC.Locations.TABLE_NAME + "." + DBC.Locations.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
         //return db.rawQuery("SELECT * FROM " + DatabaseContract.Locations.TABLE_NAME + " WHERE " + DatabaseContract.Locations.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
     }
 
@@ -73,23 +78,29 @@ public class LocationsMode implements Mode {
         TextView coordinateXView = view.findViewById(R.id.coordinate_x);
         TextView coordinateYView = view.findViewById(R.id.coordinate_y);
 
-        final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Locations._ID));
-        String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.NAME));
+        final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Locations._ID));
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Locations.NAME));
         //int typeId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.TYPE_ID));
         String type = cursor.getString(cursor.getColumnIndexOrThrow("type"));
-        double coordinateX = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.COORDINATE_X));
-        double coordinateY = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseContract.Locations.COORDINATE_Y));
+        Double coordinateX = null;
+        Double coordinateY = null;
+        if (!cursor.isNull(cursor.getColumnIndexOrThrow("x"))) {
+            coordinateX = cursor.getDouble(cursor.getColumnIndexOrThrow("x"));
+        }
+        if (!cursor.isNull(cursor.getColumnIndexOrThrow("y"))) {
+            coordinateY = cursor.getDouble(cursor.getColumnIndexOrThrow("y"));
+        }
 
         idView.setText(String.valueOf(id));
         nameView.setText(name);
         typeIdView.setText(String.valueOf(type));
-        coordinateXView.setText(String.valueOf(coordinateX));
-        coordinateYView.setText(String.valueOf(coordinateY));
+        coordinateXView.setText(coordinateX == null ? "" : String.valueOf(coordinateX));
+        coordinateYView.setText(coordinateY == null ? "" : String.valueOf(coordinateY));
     }
 
     @Override
     public String getTableName() {
-        return DatabaseContract.Locations.TABLE_NAME;
+        return DBC.Locations.TABLE_NAME;
     }
 
     @Override

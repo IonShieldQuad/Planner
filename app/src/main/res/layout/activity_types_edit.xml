@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:text="@string/color"
                 android:layout_gravity="center_vertical"
-                android:labelFor="@+id/name_field"
+                android:labelFor="@+id/color_field"
                 />
             <TextView
                 android:id="@+id/color"

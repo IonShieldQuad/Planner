@@ -1,15 +1,13 @@
 package com.ionshield.planner.activities.database;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ionshield.planner.R;
-import com.ionshield.planner.activities.database.modes.ItemsMode;
 import com.ionshield.planner.activities.database.modes.Modes;
-import com.ionshield.planner.activities.database.modes.TypesMode;
 
 public class DatabaseMenuActivity extends AppCompatActivity {
 
@@ -37,6 +35,12 @@ public class DatabaseMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void nodesButtonClicked(View view) {
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra("mode", Modes.NODES.mode);
+        startActivity(intent);
+    }
+
     public void locationsButtonClicked(View view) {
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra("mode", Modes.LOCATIONS.mode);
@@ -58,6 +62,18 @@ public class DatabaseMenuActivity extends AppCompatActivity {
     public void eventAssocButtonClicked(View view) {
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra("mode", Modes.EVENT_ASSOC.mode);
+        startActivity(intent);
+    }
+
+    public void linkTypesButtonClicked(View view) {
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra("mode", Modes.LINK_TYPES.mode);
+        startActivity(intent);
+    }
+
+    public void linksButtonClicked(View view) {
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra("mode", Modes.LINKS.mode);
         startActivity(intent);
     }
 }

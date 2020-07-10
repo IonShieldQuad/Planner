@@ -205,12 +205,51 @@
                 android:layout_gravity="end|center_vertical" />
         </LinearLayout>
 
+
+
         <CheckBox
             android:id="@+id/use_date_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/use_date_checkbox_label"
             android:checked="true"/>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/duration_label"
+                android:labelFor="@+id/duration_field"
+                />
+            <EditText
+                android:id="@+id/duration_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:text=""
+                android:autofillHints="duration" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/minutes_long"/>
+
+            <Button
+                android:id="@+id/duration_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="pickDuration"
+                android:text="@string/pick_duration_label"
+                android:layout_gravity="end|center_vertical" />
+
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"

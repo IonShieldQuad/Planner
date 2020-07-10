@@ -13,8 +13,7 @@ import androidx.arch.core.util.Function;
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.BaseAdapter;
 import com.ionshield.planner.activities.database.editors.EventAssocEditActivity;
-import com.ionshield.planner.activities.database.editors.PlansEditActivity;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 
 public class EventAssocMode implements Mode {
     @Override
@@ -33,25 +32,25 @@ public class EventAssocMode implements Mode {
 
     @Override
     public Cursor queryAll(SQLiteDatabase db) {
-        return db.rawQuery("SELECT " + DatabaseContract.EventPlanAssoc.TABLE_NAME + "." + DatabaseContract.EventPlanAssoc._ID + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.NAME + " AS event, "
-                + DatabaseContract.Plans.TABLE_NAME + "." + DatabaseContract.Plans.NAME + " AS p FROM " + DatabaseContract.EventPlanAssoc.TABLE_NAME
-                + " JOIN " + DatabaseContract.Events.TABLE_NAME + " ON " + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events._ID + "="
-                + DatabaseContract.EventPlanAssoc.TABLE_NAME + "." + DatabaseContract.EventPlanAssoc.EVENT_ID
-                + " JOIN " + DatabaseContract.Plans.TABLE_NAME + " ON " + DatabaseContract.Plans. TABLE_NAME + "." + DatabaseContract.Plans._ID + "="
-                + DatabaseContract.EventPlanAssoc.TABLE_NAME + "." + DatabaseContract.EventPlanAssoc.PLAN_ID + ";", new String[]{});
+        return db.rawQuery("SELECT " + DBC.EventPlanAssoc.TABLE_NAME + "." + DBC.EventPlanAssoc._ID + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.NAME + " AS event, "
+                + DBC.Plans.TABLE_NAME + "." + DBC.Plans.NAME + " AS p FROM " + DBC.EventPlanAssoc.TABLE_NAME
+                + " JOIN " + DBC.Events.TABLE_NAME + " ON " + DBC.Events.TABLE_NAME + "." + DBC.Events._ID + "="
+                + DBC.EventPlanAssoc.TABLE_NAME + "." + DBC.EventPlanAssoc.EVENT_ID
+                + " JOIN " + DBC.Plans.TABLE_NAME + " ON " + DBC.Plans. TABLE_NAME + "." + DBC.Plans._ID + "="
+                + DBC.EventPlanAssoc.TABLE_NAME + "." + DBC.EventPlanAssoc.PLAN_ID + ";", new String[]{});
         //return db.rawQuery("SELECT * FROM " + DatabaseContract.EventPlanAssoc.TABLE_NAME + ";", new String[]{});
     }
 
     @Override
     public Cursor querySearch(SQLiteDatabase db, String searchString) {
-        return db.rawQuery("SELECT " + DatabaseContract.EventPlanAssoc.TABLE_NAME + "." + DatabaseContract.EventPlanAssoc._ID + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.NAME + " AS event, "
-                + DatabaseContract.Plans.TABLE_NAME + "." + DatabaseContract.Plans.NAME + " AS p FROM " + DatabaseContract.EventPlanAssoc.TABLE_NAME
-                + " JOIN " + DatabaseContract.Events.TABLE_NAME + " ON " + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events._ID + "="
-                + DatabaseContract.EventPlanAssoc.TABLE_NAME + "." + DatabaseContract.EventPlanAssoc.EVENT_ID
-                + " JOIN " + DatabaseContract.Plans.TABLE_NAME + " ON " + DatabaseContract.Plans. TABLE_NAME + "." + DatabaseContract.Plans._ID + "="
-                + DatabaseContract.EventPlanAssoc.TABLE_NAME + "." + DatabaseContract.EventPlanAssoc.PLAN_ID
+        return db.rawQuery("SELECT " + DBC.EventPlanAssoc.TABLE_NAME + "." + DBC.EventPlanAssoc._ID + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.NAME + " AS event, "
+                + DBC.Plans.TABLE_NAME + "." + DBC.Plans.NAME + " AS p FROM " + DBC.EventPlanAssoc.TABLE_NAME
+                + " JOIN " + DBC.Events.TABLE_NAME + " ON " + DBC.Events.TABLE_NAME + "." + DBC.Events._ID + "="
+                + DBC.EventPlanAssoc.TABLE_NAME + "." + DBC.EventPlanAssoc.EVENT_ID
+                + " JOIN " + DBC.Plans.TABLE_NAME + " ON " + DBC.Plans. TABLE_NAME + "." + DBC.Plans._ID + "="
+                + DBC.EventPlanAssoc.TABLE_NAME + "." + DBC.EventPlanAssoc.PLAN_ID
                 + " WHERE (event LIKE ? OR p LIKE ?);", new String[]{"%" + searchString + "%", "%" + searchString + "%"});
         //return db.rawQuery("SELECT * FROM " + DatabaseContract.EventPlanAssoc.TABLE_NAME + " WHERE (" + DatabaseContract.EventPlanAssoc.EVENT_ID + "=? OR " + DatabaseContract.EventPlanAssoc.PLAN_ID + "=?);", new String[]{searchString, searchString});
     }
@@ -72,7 +71,7 @@ public class EventAssocMode implements Mode {
         TextView eventIdView = view.findViewById(R.id.event_id);
         TextView planIdView = view.findViewById(R.id.plan_id);
 
-        final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.EventPlanAssoc._ID));
+        final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.EventPlanAssoc._ID));
         //int eventId = cursor.getInt((cursor.getColumnIndexOrThrow(DatabaseContract.EventPlanAssoc.EVENT_ID)));
         //int planId = cursor.getInt((cursor.getColumnIndexOrThrow(DatabaseContract.EventPlanAssoc.PLAN_ID)));
         String event = cursor.getString((cursor.getColumnIndexOrThrow("event")));
@@ -85,7 +84,7 @@ public class EventAssocMode implements Mode {
 
     @Override
     public String getTableName() {
-        return DatabaseContract.EventPlanAssoc.TABLE_NAME;
+        return DBC.EventPlanAssoc.TABLE_NAME;
     }
 
     @Override

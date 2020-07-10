@@ -13,7 +13,7 @@ import androidx.arch.core.util.Function;
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.BaseAdapter;
 import com.ionshield.planner.activities.database.editors.EventsEditActivity;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -35,28 +35,28 @@ public class EventsMode implements Mode {
 
     @Override
     public Cursor queryAll(SQLiteDatabase db) {
-        return db.rawQuery("SELECT " + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events._ID + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.NAME + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.DATETIME_MIN + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.DATETIME_MAX + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.IS_DATE_USED + ", "
-                + DatabaseContract.Items.TABLE_NAME + "." + DatabaseContract.Items.NAME + " AS item FROM " + DatabaseContract.Events.TABLE_NAME
-                + " JOIN " + DatabaseContract.Items.TABLE_NAME + " ON " + DatabaseContract.Items.TABLE_NAME + "." + DatabaseContract.Items._ID + "="
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.ITEM_ID + ";", new String[]{});
+        return db.rawQuery("SELECT " + DBC.Events.TABLE_NAME + "." + DBC.Events._ID + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.NAME + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.DATETIME_MIN + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.DATETIME_MAX + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.IS_DATE_USED + ", "
+                + DBC.Items.TABLE_NAME + "." + DBC.Items.NAME + " AS item FROM " + DBC.Events.TABLE_NAME
+                + " JOIN " + DBC.Items.TABLE_NAME + " ON " + DBC.Items.TABLE_NAME + "." + DBC.Items._ID + "="
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.ITEM_ID + ";", new String[]{});
         //return db.rawQuery("SELECT * FROM " + DatabaseContract.Events.TABLE_NAME + ";", new String[]{});
     }
 
     @Override
     public Cursor querySearch(SQLiteDatabase db, String searchString) {
-        return db.rawQuery("SELECT " + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events._ID + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.NAME + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.DATETIME_MIN + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.DATETIME_MAX + ", "
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.IS_DATE_USED + ", "
-                + DatabaseContract.Items.TABLE_NAME + "." + DatabaseContract.Items.NAME + " AS item FROM " + DatabaseContract.Events.TABLE_NAME
-                + " JOIN " + DatabaseContract.Items.TABLE_NAME + " ON " + DatabaseContract.Items.TABLE_NAME + "." + DatabaseContract.Items._ID + "="
-                + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.ITEM_ID
-                + " WHERE " + DatabaseContract.Events.TABLE_NAME + "." + DatabaseContract.Events.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
+        return db.rawQuery("SELECT " + DBC.Events.TABLE_NAME + "." + DBC.Events._ID + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.NAME + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.DATETIME_MIN + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.DATETIME_MAX + ", "
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.IS_DATE_USED + ", "
+                + DBC.Items.TABLE_NAME + "." + DBC.Items.NAME + " AS item FROM " + DBC.Events.TABLE_NAME
+                + " JOIN " + DBC.Items.TABLE_NAME + " ON " + DBC.Items.TABLE_NAME + "." + DBC.Items._ID + "="
+                + DBC.Events.TABLE_NAME + "." + DBC.Events.ITEM_ID
+                + " WHERE " + DBC.Events.TABLE_NAME + "." + DBC.Events.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
         //return db.rawQuery("SELECT * FROM " + DatabaseContract.Events.TABLE_NAME + " WHERE " + DatabaseContract.Events.NAME + " LIKE ?;", new String[]{"%" + searchString + "%"});
     }
 
@@ -78,15 +78,15 @@ public class EventsMode implements Mode {
         TextView datetimeMinView = view.findViewById(R.id.datetime_min);
         TextView datetimeMaxView = view.findViewById(R.id.datetime_max);
 
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Events._ID));
-        String name = cursor.getString((cursor.getColumnIndexOrThrow(DatabaseContract.Events.NAME)));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Events._ID));
+        String name = cursor.getString((cursor.getColumnIndexOrThrow(DBC.Events.NAME)));
         //int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Events.ITEM_ID));
         String item = cursor.getString(cursor.getColumnIndexOrThrow("item"));
 
         DateFormat df;
-        boolean useDate = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Events.IS_DATE_USED)) != 0;
-        int datetimeMinIndex = cursor.getColumnIndex(DatabaseContract.Events.DATETIME_MIN);
-        int datetimeMaxIndex = cursor.getColumnIndex(DatabaseContract.Events.DATETIME_MAX);
+        boolean useDate = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.Events.IS_DATE_USED)) != 0;
+        int datetimeMinIndex = cursor.getColumnIndex(DBC.Events.DATETIME_MIN);
+        int datetimeMaxIndex = cursor.getColumnIndex(DBC.Events.DATETIME_MAX);
         if (useDate) {
             df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         }
@@ -113,7 +113,7 @@ public class EventsMode implements Mode {
 
     @Override
     public String getTableName() {
-        return DatabaseContract.Events.TABLE_NAME;
+        return DBC.Events.TABLE_NAME;
     }
 
     @Override

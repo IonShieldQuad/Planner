@@ -1,24 +1,23 @@
 package com.ionshield.planner.activities.database.editors;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ionshield.planner.R;
-import com.ionshield.planner.activities.database.modes.ItemsMode;
 import com.ionshield.planner.activities.database.modes.Modes;
-import com.ionshield.planner.database.DatabaseContract;
+import com.ionshield.planner.database.DBC;
 import com.ionshield.planner.database.DatabaseHelper;
 
 public class ItemAssocEditActivity extends AppCompatActivity {
@@ -45,14 +44,14 @@ public class ItemAssocEditActivity extends AppCompatActivity {
             title.setText(R.string.edit);
 
             try {
-                Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.ItemTypeAssoc.TABLE_NAME + " WHERE " + DatabaseContract.ItemTypeAssoc._ID + "=?;", new String[]{String.valueOf(id)});
+                Cursor cursor = db.rawQuery("SELECT * FROM " + DBC.ItemTypeAssoc.TABLE_NAME + " WHERE " + DBC.ItemTypeAssoc._ID + "=?;", new String[]{String.valueOf(id)});
 
                 cursor.moveToFirst();
-                int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ItemTypeAssoc.ITEM_ID));
-                int typeId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ItemTypeAssoc.TYPE_ID));
+                int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.ItemTypeAssoc.ITEM_ID));
+                int typeId = cursor.getInt(cursor.getColumnIndexOrThrow(DBC.ItemTypeAssoc.TYPE_ID));
 
-                EditText itemIdField = (EditText) fields[0];
-                EditText typeIdField = (EditText) fields[1];
+                EditText itemIdField = fields[0];
+                EditText typeIdField = fields[1];
 
                 itemIdField.setText(String.valueOf(itemId));
                 typeIdField.setText(String.valueOf(typeId));
@@ -85,13 +84,13 @@ public class ItemAssocEditActivity extends AppCompatActivity {
 
         try {
             if (id >= 0) {
-                SQLiteStatement stmt = db.compileStatement("UPDATE " + DatabaseContract.ItemTypeAssoc.TABLE_NAME + " SET " + DatabaseContract.ItemTypeAssoc.ITEM_ID + "=?, " + DatabaseContract.ItemTypeAssoc.TYPE_ID + "=? WHERE " + DatabaseContract.Items._ID + "=?;");
+                SQLiteStatement stmt = db.compileStatement("UPDATE " + DBC.ItemTypeAssoc.TABLE_NAME + " SET " + DBC.ItemTypeAssoc.ITEM_ID + "=?, " + DBC.ItemTypeAssoc.TYPE_ID + "=? WHERE " + BaseColumns._ID + "=?;");
                 stmt.bindLong(1, itemId);
                 stmt.bindLong(2, typeId);
                 stmt.bindLong(3, id);
                 stmt.executeUpdateDelete();
             } else {
-                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DatabaseContract.ItemTypeAssoc.TABLE_NAME + " (" + DatabaseContract.ItemTypeAssoc.ITEM_ID + ", " + DatabaseContract.ItemTypeAssoc.TYPE_ID + ") VALUES (?, ?);");
+                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + DBC.ItemTypeAssoc.TABLE_NAME + " (" + DBC.ItemTypeAssoc.ITEM_ID + ", " + DBC.ItemTypeAssoc.TYPE_ID + ") VALUES (?, ?);");
                 stmt.bindLong(1, itemId);
                 stmt.bindLong(2, typeId);
                 stmt.executeInsert();

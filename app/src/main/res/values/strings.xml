@@ -144,4 +144,25 @@
     <string name="find_button_label">Find</string>
     <string name="no_locations_found_message">No locations found</string>
     <string name="location_found_message">Closest location: \"%1$s\" \n at (%2$f; %3$f)</string>
+    <string name="nodes_title">Nodes</string>
+    <string name="nodes_button_label">Nodes</string>
+    <string name="link_types_button_label">Link Types</string>
+    <string name="links_button_label">Links</string>
+    <string name="node_id_label">"Node: "</string>
+    <string name="location_finder_button_label">Closest</string>
+    <string name="path_button_label">Path</string>
+    <string name="pick_duration_label">Pick</string>
+    <string name="minutes_short">m</string>
+    <string name="duration_label">"Duration: "</string>
+    <string name="minutes_long">minutes</string>
+    <string name="speed_label">Speed: </string>
+    <string name="to_node_label">To: </string>
+    <string name="from_node_label">From: </string>
+    <string name="width">Width: </string>
+    <string name="speed">Speed: </string>
+    <string name="is_enabled_checkbox_label">"Enabled"</string>
+    <string name="link_types_title">Link Types</string>
+    <string name="modifier_label">"Modifier: "</string>
+    <string name="link_type_id_label">"Type: "</string>
+    <string name="links_title">Links</string>
 </resources>
