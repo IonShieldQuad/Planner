@@ -1,0 +1,18 @@
+<resources>
+    <declare-styleable name="CustomMapView">
+        <attr name="mapScaleX" format="float" />
+        <attr name="mapScaleY" format="float" />
+        <attr name="mapPositionX" format="float" />
+        <attr name="mapPositionY" format="float" />
+        <attr name="nodeColor" format="color" />
+        <attr name="currMarkerColor" format="color" />
+        <attr name="pathColor" format="color" />
+        <attr name="displaySearchArea" format="boolean" />
+        <attr name="searchAreaColor" format="color" />
+        <attr name="displayMarkers" format="boolean" />
+        <attr name="nodeRadius" format="dimension" />
+        <attr name="selectedNodeColor" format="color" />
+        <attr name="selectionExtraRadius" format="dimension" />
+        <attr name="arrowLength" format="dimension" />
+    </declare-styleable>
+</resources>

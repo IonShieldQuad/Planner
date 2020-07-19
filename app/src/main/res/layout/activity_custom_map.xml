@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CustomMapActivity"
+    android:id="@+id/root">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="32sp"
+            android:gravity="center_horizontal|top"
+            android:text="@string/map_title"/>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/event_id_label"
+                android:labelFor="@+id/event_id_field"
+                />
+            <EditText
+                android:id="@+id/event_id_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:text=""
+                android:autofillHints="event_id" />
+            <Button
+                android:id="@+id/events_browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:onClick="browseEvents"
+                android:text="@string/browse_button_label"
+                android:layout_gravity="end|center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/heuristic_label"
+                android:labelFor="@+id/heuristic_field"
+                />
+            <EditText
+                android:id="@+id/heuristic_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:text="0"
+                android:autofillHints="heuristic"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/max_distance_label"
+                android:labelFor="@+id/max_distance_field"
+                />
+            <EditText
+                android:id="@+id/max_distance_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:text="1000"
+                android:autofillHints="max_distance"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            style="?android:attr/buttonBarStyle">
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/find_button_label"
+                android:layout_gravity="start"
+                style="?android:attr/buttonBarButtonStyle"
+                android:onClick="findButtonClicked"/>
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/set_current_label"
+                android:layout_gravity="center"
+                style="?android:attr/buttonBarButtonStyle"
+                android:onClick="setCurrentButtonClicked"/>
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/to_selected_button_label"
+                android:layout_gravity="end"
+                style="?android:attr/buttonBarButtonStyle"
+                android:onClick="toSelectedButtonClicked"/>
+        </LinearLayout>
+
+
+        <fragment
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/map_fragment"
+            android:name="com.ionshield.planner.fragments.CustomMapFragment"
+            tools:layout="@layout/custom_map_fragment">
+
+        </fragment>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

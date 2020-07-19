@@ -165,4 +165,17 @@
     <string name="modifier_label">"Modifier: "</string>
     <string name="link_type_id_label">"Type: "</string>
     <string name="links_title">Links</string>
+    <string name="zoom_in">+</string>
+    <string name="zoom_out">-</string>
+    <string name="move_down">Move down</string>
+    <string name="move_up">Move Up</string>
+    <string name="move_right">Move Right</string>
+    <string name="move_left">Move Left</string>
+    <string name="map_title">Map</string>
+    <string name="heuristic_label">Heuristic:</string>
+    <string name="set_current_label">Set current</string>
+    <string name="to_selected_button_label">To selected</string>
+    <string name="no_current_position_message">No current position selected</string>
+    <string name="max_distance_label">Max Distance:</string>
+    <string name="no_selected_node_message">No selected node</string>
 </resources>

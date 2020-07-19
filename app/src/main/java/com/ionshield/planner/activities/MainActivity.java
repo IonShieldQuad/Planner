@@ -29,5 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pathButtonClicked(View view) {
+        Intent intent = new Intent(this, CustomMapActivity.class);
+        startActivity(intent);
     }
 }
