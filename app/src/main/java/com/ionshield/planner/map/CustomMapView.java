@@ -17,7 +17,10 @@ import android.util.AttributeSet;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
+
+import androidx.core.view.MotionEventCompat;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.database.DBC;
@@ -136,47 +139,119 @@ public class CustomMapView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
+        final Context ctx = getContext();
         // Update TextPaint and text measurements from attributes
         invalidateTextPaintAndMeasurements();
-
         setOnTouchListener(new OnTouchListener() {
+            private int mActivePointerId = -1;
+            private ScaleGestureDetector mScaleDetector = new ScaleGestureDetector(ctx, new ScaleGestureDetector.OnScaleGestureListener() {
+                @Override
+                public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+                    float factor = scaleGestureDetector.getScaleFactor();
+                    zoom(1 / factor);
+                    return true;
+                }
+
+                @Override
+                public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                    return true;
+                }
+
+                @Override
+                public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
+
+                }
+            });
+            private Float mLastTouchX = null;
+            private Float mLastTouchY = null;
+
+
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    double absX = screenToAbsoluteX(motionEvent.getX());
-                    double absY = screenToAbsoluteY(motionEvent.getY());
-                    int nodeId = -1;
 
-                    double rad = mNodeRadius + mSelectExtraRadius;
-                    double absRad = rad * (mScaleX + mScaleY) / 2;
-                    Cursor nodes = mDatabase.rawQuery("SELECT * FROM " + DBC.Nodes.TABLE_NAME
-                            + " WHERE ("
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " * "
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " + "
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + " * "
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + ") <= (? * ?)"
-                            + " ORDER BY ("
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " * "
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " + "
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + " * "
-                            + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + ") ASC;",
-                            new String[]{String.valueOf(absX), String.valueOf(absX),
-                                    String.valueOf(absY), String.valueOf(absY),
-                                    String.valueOf(absRad), String.valueOf(absRad),
-                                    String.valueOf(absX), String.valueOf(absX),
-                                    String.valueOf(absY), String.valueOf(absY)});
+                final int action = MotionEventCompat.getActionMasked(motionEvent);
+                mScaleDetector.onTouchEvent(motionEvent);
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN: {
+                        final int pointerIndex = MotionEventCompat.getActionIndex(motionEvent);
+                        final float x = MotionEventCompat.getX(motionEvent, pointerIndex);
+                        final float y = MotionEventCompat.getY(motionEvent, pointerIndex);
 
-                    nodes.moveToFirst();
-                    if (!nodes.isAfterLast()) {
-                        nodeId = nodes.getInt(nodes.getColumnIndexOrThrow(BaseColumns._ID));
+                        mLastTouchX = x;
+                        mLastTouchY = y;
+
+                        mActivePointerId = MotionEventCompat.getPointerId(motionEvent, 0);
+
+                        double absX = screenToAbsoluteX(motionEvent.getX());
+                        double absY = screenToAbsoluteY(motionEvent.getY());
+                        int nodeId = -1;
+
+                        double rad = mNodeRadius + mSelectExtraRadius;
+                        double absRad = rad * (mScaleX + mScaleY) / 2;
+                        Cursor nodes = mDatabase.rawQuery("SELECT * FROM " + DBC.Nodes.TABLE_NAME
+                                        + " WHERE ("
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " * "
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " + "
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + " * "
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + ") <= (? * ?)"
+                                        + " ORDER BY ("
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " * "
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_X + " - " + "?)" + " + "
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + " * "
+                                        + "(" + DBC.Nodes.TABLE_NAME + "." + DBC.Nodes.COORDINATE_Y + " - " + "?)" + ") ASC;",
+                                new String[]{String.valueOf(absX), String.valueOf(absX),
+                                        String.valueOf(absY), String.valueOf(absY),
+                                        String.valueOf(absRad), String.valueOf(absRad),
+                                        String.valueOf(absX), String.valueOf(absX),
+                                        String.valueOf(absY), String.valueOf(absY)});
+
+                        nodes.moveToFirst();
+                        if (!nodes.isAfterLast()) {
+                            nodeId = nodes.getInt(nodes.getColumnIndexOrThrow(BaseColumns._ID));
+                        }
+                        nodes.close();
+
+                        for (ClickListener l : mListeners) {
+                            l.onClick(absX, absY, nodeId);
+                        }
+                        //Toast.makeText(getContext(), absX + "; " + absY + "; " + nodeId, Toast.LENGTH_SHORT).show();
+                        performClick();
+                        break;
                     }
-                    nodes.close();
+                    case MotionEvent.ACTION_MOVE: {
+                        final int pointerIndex = MotionEventCompat.findPointerIndex(motionEvent, mActivePointerId);
 
-                    for (ClickListener l : mListeners) {
-                        l.onClick(absX, absY, nodeId);
+                        final float x = MotionEventCompat.getX(motionEvent, pointerIndex);
+                        final float y = MotionEventCompat.getY(motionEvent, pointerIndex);
+
+                        if (mLastTouchX != null && mLastTouchY != null) {
+                            final float dx = x - mLastTouchX;
+                            final float dy = y - mLastTouchY;
+                            moveBy(-dx / (contentWidth()), dy / contentHeight());
+                        }
+                        mLastTouchX = x;
+                        mLastTouchY = y;
+                        break;
                     }
-                    //Toast.makeText(getContext(), absX + "; " + absY + "; " + nodeId, Toast.LENGTH_SHORT).show();
-                    performClick();
+                    case MotionEvent.ACTION_UP: {
+                        mActivePointerId = -1;
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        mActivePointerId = -1;
+                        break;
+                    }
+                    case MotionEvent.ACTION_POINTER_UP: {
+                        final int pointerIndex = MotionEventCompat.getActionIndex(motionEvent);
+                        final int pointerId = MotionEventCompat.getPointerId(motionEvent, pointerIndex);
+                        if (pointerId == mActivePointerId) {
+                            final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+                            mLastTouchX = MotionEventCompat.getX(motionEvent, newPointerIndex);
+                            mLastTouchY = MotionEventCompat.getY(motionEvent, newPointerIndex);
+                            mActivePointerId = MotionEventCompat.getPointerId(motionEvent, newPointerIndex);
+                        }
+                        break;
+                    }
                 }
                 return true;
             }
@@ -272,15 +347,21 @@ public class CustomMapView extends View {
         invalidate();
     }
 
-    public void zoomIn(double scaleX, double scaleY) {
-        mScaleX *= (1 - scaleX);
-        mScaleY *= (1 - scaleY);
+    public void zoom(double factor) {
+        mScaleX *= factor;
+        mScaleY *= factor;
         invalidate();
     }
 
-    public void zoomOut(double scaleX, double scaleY) {
-        mScaleX /= (1 - scaleX);
-        mScaleY /= (1 - scaleY);
+    public void zoomIn(double amountX, double amountY) {
+        mScaleX *= (1 - amountX);
+        mScaleY *= (1 - amountY);
+        invalidate();
+    }
+
+    public void zoomOut(double amountX, double amountY) {
+        mScaleX /= (1 - amountX);
+        mScaleY /= (1 - amountY);
         invalidate();
     }
 

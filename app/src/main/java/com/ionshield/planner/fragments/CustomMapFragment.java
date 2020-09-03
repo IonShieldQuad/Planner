@@ -37,7 +37,7 @@ public class CustomMapFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root =  inflater.inflate(R.layout.custom_map_fragment, container, false);
+        View root =  inflater.inflate(R.layout.custom_map_fragment_nobtn, container, false);
 
         final CustomMapView map = root.findViewById(R.id.map_view);
         SQLiteDatabase db = new DatabaseHelper(getActivity()).getReadableDatabase();
