@@ -179,4 +179,5 @@
     <string name="max_distance_label">Max Distance:</string>
     <string name="no_selected_node_message">No selected node</string>
     <string name="display_markers_checkbox_label">Display Markers</string>
+    <string name="pathfinding_header">Pathfinding</string>
 </resources>

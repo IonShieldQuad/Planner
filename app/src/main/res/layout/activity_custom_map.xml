@@ -45,7 +45,7 @@
                 android:text="@string/browse_button_label"
                 android:layout_gravity="end|center_vertical" />
         </LinearLayout>
-
+        <!--
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:autofillHints="max_distance"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
-
+        -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,21 +98,24 @@
             style="?android:attr/buttonBarStyle">
             <Button
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:text="@string/find_button_label"
                 android:layout_gravity="start"
                 style="?android:attr/buttonBarButtonStyle"
                 android:onClick="findButtonClicked"/>
             <Button
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:text="@string/set_current_label"
                 android:layout_gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:onClick="setCurrentButtonClicked"/>
             <Button
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:text="@string/to_selected_button_label"
                 android:layout_gravity="end"
                 style="?android:attr/buttonBarButtonStyle"
@@ -125,7 +128,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/map_fragment"
             android:name="com.ionshield.planner.fragments.CustomMapFragment"
-            tools:layout="@layout/custom_map_fragment">
+            tools:layout="@layout/custom_map_fragment_nobtn">
 
         </fragment>
     </LinearLayout>

@@ -1,16 +1,22 @@
 package com.ionshield.planner.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.modes.Modes;
@@ -37,6 +43,25 @@ public class CustomMapActivity extends AppCompatActivity {
                 .commit();*/
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.appbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings: {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
+        return true;
+    }
+
     public void findButtonClicked(View view) {
         CustomMapFragment mapFragment = (CustomMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 
@@ -49,8 +74,8 @@ public class CustomMapActivity extends AppCompatActivity {
         int currentNode = mapFragment.getCurrentNode();
 
         EditText eventIdField = findViewById(R.id.event_id_field);
-        EditText heuristicField = findViewById(R.id.heuristic_field);
-        EditText maxDistanceField = findViewById(R.id.max_distance_field);
+        //EditText heuristicField = findViewById(R.id.heuristic_field);
+        //EditText maxDistanceField = findViewById(R.id.max_distance_field);
 
         int eventId;
         double heuristic;
@@ -58,15 +83,19 @@ public class CustomMapActivity extends AppCompatActivity {
 
         try {
             eventId = Integer.parseInt(eventIdField.getText().toString());
-            heuristic = Double.parseDouble(heuristicField.getText().toString());
-            maxDistance = Double.parseDouble(maxDistanceField.getText().toString());
-            maxDistance = Math.max(0, maxDistance);
+            //heuristic = Double.parseDouble(heuristicField.getText().toString());
+            //maxDistance = Double.parseDouble(maxDistanceField.getText().toString());
+            //maxDistance = Math.max(0, maxDistance);
         }
         catch (NumberFormatException e) {
             Toast.makeText(this, R.string.number_format_error_message, Toast.LENGTH_LONG).show();
             return;
         }
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        heuristic = Double.parseDouble(sp.getString("heuristic", "0"));
+        maxDistance = Double.parseDouble(sp.getString("max_distance", "1000"));
+        maxDistance = Math.max(0, maxDistance);
 
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DBC.Nodes.TABLE_NAME
                 + " WHERE " + BaseColumns._ID + "=?",
@@ -157,17 +186,20 @@ public class CustomMapActivity extends AppCompatActivity {
         }
         int selectedNode = mapFragment.getSelectedNode();
 
-        EditText heuristicField = findViewById(R.id.heuristic_field);
+        //EditText heuristicField = findViewById(R.id.heuristic_field);
 
         double heuristic;
 
         try {
-            heuristic = Double.parseDouble(heuristicField.getText().toString());
+            //heuristic = Double.parseDouble(heuristicField.getText().toString());
         }
         catch (NumberFormatException e) {
             Toast.makeText(this, R.string.number_format_error_message, Toast.LENGTH_LONG).show();
             return;
         }
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        heuristic = Double.parseDouble(sp.getString("heuristic", "0"));
 
         Map<Integer, Double> targets = new HashMap<>();
         targets.put(selectedNode, heuristic);
