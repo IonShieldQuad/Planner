@@ -46,7 +46,7 @@ public class CustomMapActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.appbar_menu, menu);
+        inflater.inflate(R.menu.map_appbar_menu, menu);
         return true;
     }
 
@@ -200,6 +200,7 @@ public class CustomMapActivity extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         heuristic = Double.parseDouble(sp.getString("heuristic", "0"));
+        //Toast.makeText(this, String.valueOf(heuristic), Toast.LENGTH_SHORT).show();
 
         Map<Integer, Double> targets = new HashMap<>();
         targets.put(selectedNode, heuristic);

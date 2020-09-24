@@ -39,6 +39,7 @@ public class CustomMapView extends View {
  // TODO: use a default from R.colors...
 
     private List<ClickListener> mListeners = new ArrayList<>();
+    private List<MoveScaleListener> mMoveScaleListeners = new ArrayList<>();
 
     private static final PathEffect SOLID_LINE = new PathEffect();
     private static final PathEffect DASHED_LINE = new DashPathEffect(new float[]{15, 10}, 0);
@@ -341,28 +342,38 @@ public class CustomMapView extends View {
         }
     }
 
+    private void notifyMoveScaleListeners() {
+        for (MoveScaleListener l : mMoveScaleListeners) {
+            l.onMoveScale(mPositionX, mPositionY, mScaleX, mScaleY);
+        }
+    }
+
     public void moveBy(double portsX, double portsY) {
         mPositionX += portsX * widthAbsolute();
         mPositionY += portsY * heightAbsolute();
         invalidate();
+        notifyMoveScaleListeners();
     }
 
     public void zoom(double factor) {
         mScaleX *= factor;
         mScaleY *= factor;
         invalidate();
+        notifyMoveScaleListeners();
     }
 
     public void zoomIn(double amountX, double amountY) {
         mScaleX *= (1 - amountX);
         mScaleY *= (1 - amountY);
         invalidate();
+        notifyMoveScaleListeners();
     }
 
     public void zoomOut(double amountX, double amountY) {
         mScaleX /= (1 - amountX);
         mScaleY /= (1 - amountY);
         invalidate();
+        notifyMoveScaleListeners();
     }
 
 
@@ -849,5 +860,13 @@ public class CustomMapView extends View {
 
     public void addClickListener(ClickListener l) {
         mListeners.add(l);
+    }
+
+    public interface MoveScaleListener {
+        void onMoveScale(double positionX, double positionY, double scaleX, double scaleY);
+    }
+
+    public void addMoveScaleListener(MoveScaleListener l) {
+        mMoveScaleListeners.add(l);
     }
 }

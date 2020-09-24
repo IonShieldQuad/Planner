@@ -180,4 +180,18 @@
     <string name="no_selected_node_message">No selected node</string>
     <string name="display_markers_checkbox_label">Display Markers</string>
     <string name="pathfinding_header">Pathfinding</string>
+    <string name="heuristic_label_2">Heuristic</string>
+    <string name="max_distance_label_2">Max Distance</string>
+    <string name="map_header">Map</string>
+    <string name="map_background_color_label_2">Background color</string>
+    <string name="map_node_color_label_2">Node color</string>
+    <string name="map_node_radius_label_2">Node radius</string>
+    <string name="map_node_selected_color_label_2">Node selection color</string>
+    <string name="map_node_selected_radius_label_2">Node selection radius</string>
+    <string name="map_node_current_color_label_2">Current location marker color</string>
+    <string name="map_path_color_label_2">Path color</string>
+    <string name="map_search_area_color_label_2">Search area color</string>
+    <string name="map_search_area_checkbox_label">Display search area</string>
+    <string name="map_arrow_size_label_2">Arrow size</string>
+    <string name="scale_label">"Scale: "</string>
 </resources>

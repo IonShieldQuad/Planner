@@ -21,19 +21,84 @@
         <EditTextPreference
             android:key="heuristic"
             app:defaultValue="0"
-            app:title="@string/heuristic_label"
+            app:title="@string/heuristic_label_2"
+            app:useSimpleSummaryProvider="true"
             android:inputType="numberDecimal"
             />
 
         <EditTextPreference
             android:key="max_distance"
             app:defaultValue="1000"
-            app:title="@string/max_distance_label"
+            app:title="@string/max_distance_label_2"
+            app:useSimpleSummaryProvider="true"
             android:inputType="numberDecimal"
             />
 
     </PreferenceCategory>
 
-
+    <PreferenceCategory app:title="@string/map_header">
+        <EditTextPreference
+            android:key="map_background_color"
+            app:defaultValue="3f3f3f"
+            app:title="@string/map_background_color_label_2"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_node_color"
+            app:defaultValue="ffff00"
+            app:title="@string/map_node_color_label_2"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_node_radius"
+            app:defaultValue="4"
+            app:title="@string/map_node_radius_label_2"
+            android:inputType="numberDecimal"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_node_selected_color"
+            app:defaultValue="ffaa33"
+            app:title="@string/map_node_selected_color_label_2"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_node_selected_radius"
+            app:defaultValue="15"
+            app:title="@string/map_node_selected_radius_label_2"
+            android:inputType="numberDecimal"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_current_color"
+            app:defaultValue="ff00000"
+            app:title="@string/map_node_current_color_label_2"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_path_color"
+            app:defaultValue="00ff00"
+            app:title="@string/map_path_color_label_2"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            android:key="map_search_area_color"
+            app:defaultValue="00ffff"
+            app:title="@string/map_search_area_color_label_2"
+            app:useSimpleSummaryProvider="true"
+            />
+        <CheckBoxPreference
+            android:key="map_display_search_area"
+            app:title="@string/map_search_area_checkbox_label"
+            app:defaultValue="true"
+            />
+        <EditTextPreference
+            android:key="map_arrow_size"
+            app:defaultValue="20"
+            app:title="@string/map_arrow_size_label_2"
+            android:inputType="numberDecimal"
+            app:useSimpleSummaryProvider="true"
+            />
+    </PreferenceCategory>
 
 </PreferenceScreen>

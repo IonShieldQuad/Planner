@@ -1,5 +1,6 @@
 package com.ionshield.planner.fragments;
 
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,11 +10,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.database.DatabaseHelper;
@@ -22,6 +25,9 @@ import com.ionshield.planner.pathfinding.PathResult;
 import com.ionshield.planner.pathfinding.Pathfinder;
 
 import java.util.Map;
+
+import static com.ionshield.planner.Utils.colorHexToInt;
+import static com.ionshield.planner.Utils.parseDoubleOrNull;
 
 public class CustomMapFragment extends Fragment {
 
@@ -50,6 +56,27 @@ public class CustomMapFragment extends Fragment {
         });
 
         mMap = map;
+
+        final TextView positionXView = root.findViewById(R.id.position_x);
+        final TextView positionYView = root.findViewById(R.id.position_y);
+        final TextView scaleView = root.findViewById(R.id.scale);
+
+        map.addMoveScaleListener(new CustomMapView.MoveScaleListener() {
+            @Override
+            public void onMoveScale(double positionX, double positionY, double scaleX, double scaleY) {
+                if (positionXView != null) {
+                    positionXView.setText(String.valueOf((float)positionX));
+                }
+                if (positionYView != null) {
+                    positionYView.setText(String.valueOf((float)positionX));
+                }
+                if (scaleView != null) {
+                    scaleView.setText(String.valueOf((float)scaleX));
+                }
+            }
+        });
+
+        map.moveBy(0, 0);
 
         ImageButton upButton = root.findViewById(R.id.up_button);
         upButton.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +135,55 @@ public class CustomMapFragment extends Fragment {
         });
 
         mPathfinder = new Pathfinder(db);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(root.getContext());
+
+        Integer bgColor = colorHexToInt(sp.getString("map_background_color", null));
+        if (bgColor != null) {
+            map.setBackgroundColor(bgColor + 0xff000000);
+        }
+
+        Integer nodeColor = colorHexToInt(sp.getString("map_node_color", null));
+        if (nodeColor != null) {
+            map.setNodeColor(nodeColor + 0xff000000);
+        }
+
+        Double nodeRadius = parseDoubleOrNull(sp.getString("map_node_radius", null));
+        if (nodeRadius != null) {
+            map.setNodeRadius((int)(double)nodeRadius);
+        }
+
+        Integer nodeSelectedColor = colorHexToInt(sp.getString("map_node_selected_color", null));
+        if (nodeSelectedColor != null) {
+            map.setSelectedNodeColor(nodeSelectedColor);
+        }
+
+        Double nodeSelectedRadius = parseDoubleOrNull(sp.getString("map_node_selected_radius", null));
+        if (nodeSelectedRadius != null) {
+            map.setSelectExtraRadius((int)(double)nodeSelectedRadius);
+        }
+
+        Integer currentNodeColor = colorHexToInt(sp.getString("map_current_color", null));
+        if (currentNodeColor != null) {
+            map.setCurrMarkerColor(currentNodeColor);
+        }
+
+        Integer pathColor = colorHexToInt(sp.getString("map_path_color", null));
+        if (pathColor != null) {
+            map.setPathColor(pathColor);
+        }
+
+        Integer searchAreaColor = colorHexToInt(sp.getString("map_search_area_color", null));
+        if (searchAreaColor != null) {
+            map.setSearchAreaColor(searchAreaColor);
+        }
+
+        map.setDisplaySearchArea(sp.getBoolean("map_display_search_area", false));
+
+        Double arrowSize = parseDoubleOrNull(sp.getString("map_arrow_size", null));
+        if (arrowSize != null) {
+            map.setArrowLength((int)(double)arrowSize);
+        }
 
         /*Map<Integer, Double> tgt = new HashMap<>();
         tgt.put(5, 0.0);
