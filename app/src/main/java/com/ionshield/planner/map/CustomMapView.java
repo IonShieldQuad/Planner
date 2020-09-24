@@ -851,7 +851,7 @@ public class CustomMapView extends View {
     }
 
     public void setArrowLength(int arrowLength) {
-        this.mArrowLength = mArrowLength;
+        this.mArrowLength = arrowLength;
     }
 
     public interface ClickListener {

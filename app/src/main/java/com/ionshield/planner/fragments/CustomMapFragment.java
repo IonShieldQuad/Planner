@@ -155,7 +155,7 @@ public class CustomMapFragment extends Fragment {
 
         Integer nodeSelectedColor = colorHexToInt(sp.getString("map_node_selected_color", null));
         if (nodeSelectedColor != null) {
-            map.setSelectedNodeColor(nodeSelectedColor);
+            map.setSelectedNodeColor(nodeSelectedColor + 0xff000000);
         }
 
         Double nodeSelectedRadius = parseDoubleOrNull(sp.getString("map_node_selected_radius", null));
@@ -165,17 +165,17 @@ public class CustomMapFragment extends Fragment {
 
         Integer currentNodeColor = colorHexToInt(sp.getString("map_current_color", null));
         if (currentNodeColor != null) {
-            map.setCurrMarkerColor(currentNodeColor);
+            map.setCurrMarkerColor(currentNodeColor + 0xff000000);
         }
 
         Integer pathColor = colorHexToInt(sp.getString("map_path_color", null));
         if (pathColor != null) {
-            map.setPathColor(pathColor);
+            map.setPathColor(pathColor + 0xff000000);
         }
 
         Integer searchAreaColor = colorHexToInt(sp.getString("map_search_area_color", null));
         if (searchAreaColor != null) {
-            map.setSearchAreaColor(searchAreaColor);
+            map.setSearchAreaColor(searchAreaColor + 0xff000000);
         }
 
         map.setDisplaySearchArea(sp.getBoolean("map_display_search_area", false));
