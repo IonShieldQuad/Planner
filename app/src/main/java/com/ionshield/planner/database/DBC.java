@@ -268,7 +268,7 @@ public abstract class DBC {
                     Events.DATETIME_MIN + " INTEGER," +
                     Events.DATETIME_MAX + " INTEGER," +
                     Events.IS_DATE_USED + " INTEGER NOT NULL," +
-                    Events.DURATION + "INTEGER NOT NULL DEFAULT 0," +
+                    Events.DURATION + " INTEGER NOT NULL DEFAULT 0," +
                     " CONSTRAINT " + Events.FK_ITEM +
                     " FOREIGN KEY(" + Events.ITEM_ID + ")" +
                     " REFERENCES " + Items.TABLE_NAME + "(" + Items._ID + ")" +

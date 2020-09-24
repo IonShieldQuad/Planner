@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "PlanningDatabase.db";
 
     public DatabaseHelper(Context context) {
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 1 && newVersion == 2) {
+        if ((oldVersion == 1 && newVersion == 2) || (oldVersion == 2 && newVersion == 3)) {
             db.execSQL("DROP TABLE IF EXISTS " + DBC.Locations.TABLE_NAME + ";");
             onCreate(db);
             db.execSQL("ALTER TABLE " + DBC.Events.TABLE_NAME + " ADD " + DBC.Events.DURATION + " INTEGER NOT NULL DEFAULT 0;");
