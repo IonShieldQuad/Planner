@@ -71,7 +71,7 @@ public class CustomMapFragment extends Fragment {
                     positionYView.setText(String.valueOf((float)positionX));
                 }
                 if (scaleView != null) {
-                    scaleView.setText(String.valueOf((float)scaleX));
+                    scaleView.setText(String.valueOf(1 / (float)scaleX));
                 }
             }
         });
