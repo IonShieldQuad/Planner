@@ -70,8 +70,8 @@
     <string name="duration_label">"Длительность: "</string>
     <string name="minutes_long">минут</string>
     <string name="speed_label">Скорость: </string>
-    <string name="to_node_label">От: </string>
-    <string name="from_node_label">До: </string>
+    <string name="to_node_label">"До: "</string>
+    <string name="from_node_label">"От: "</string>
     <string name="width">Ширина: </string>
     <string name="speed">Скорость: </string>
     <string name="is_enabled_checkbox_label">"Включено"</string>
