@@ -172,7 +172,7 @@
     <string name="move_right">Move Right</string>
     <string name="move_left">Move Left</string>
     <string name="map_title">Map</string>
-    <string name="heuristic_label">Heuristic:</string>
+    <string name="heuristic_label">Greediness:</string>
     <string name="set_current_label">Set current</string>
     <string name="to_selected_button_label">To selected</string>
     <string name="no_current_position_message">No current position selected</string>
@@ -180,7 +180,7 @@
     <string name="no_selected_node_message">No selected node</string>
     <string name="display_markers_checkbox_label">Display Markers</string>
     <string name="pathfinding_header">Pathfinding</string>
-    <string name="heuristic_label_2">Heuristic</string>
+    <string name="heuristic_label_2">Greediness</string>
     <string name="max_distance_label_2">Max Distance</string>
     <string name="map_header">Map</string>
     <string name="map_background_color_label_2">Background color</string>

@@ -534,7 +534,7 @@ public class CustomMapView extends View {
                     if (mDisplayMarkers && id == mCurrentNodeId) {
                         Drawable drawable = getResources().getDrawable(R.drawable.ic_my_location_white_48dp);
                         drawable.setTint(0xFF000000 + mCurrMarkerColor);
-                        drawable.setBounds((int) Math.round(sx - mNodeRadius * 2.5), (int) Math.round(sy - mNodeRadius * 2.5), (int) Math.round(sx + mNodeRadius * 2.5), (int) Math.round(sy + mNodeRadius * 2.5));
+                        drawable.setBounds((int) Math.round(sx - mNodeRadius * 1.5 - 10), (int) Math.round(sy - mNodeRadius * 1.5 - 10), (int) Math.round(sx + mNodeRadius * 1.5 + 10), (int) Math.round(sy + mNodeRadius * 1.5 + 10));
                         drawable.draw(canvas);
                     }
                 }
@@ -553,7 +553,7 @@ public class CustomMapView extends View {
 
                 Drawable drawable = getResources().getDrawable(R.drawable.ic_place_white_48dp);
                 drawable.setTint(0xFF000000 + color);
-                drawable.setBounds((int) Math.round(sx - mNodeRadius * 2.5), (int) Math.round(sy - mNodeRadius * 5), (int) Math.round(sx + mNodeRadius * 2.5), (int) Math.round(sy));
+                drawable.setBounds((int) Math.round(sx - mNodeRadius * 1.5 - 10), (int) Math.round(sy - mNodeRadius * 3 - 20), (int) Math.round(sx + mNodeRadius * 1.5 + 10), (int) Math.round(sy));
                 drawable.draw(canvas);
             }
         }

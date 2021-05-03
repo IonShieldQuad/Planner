@@ -238,7 +238,7 @@ public abstract class DBC {
                     Nodes.NAME + " TEXT," +
                     Nodes.DESC + " TEXT," +
                     Nodes.COORDINATE_X + " REAL NOT NULL," +
-                    Nodes.COORDINATE_Y + " REAl NOT NULL);";
+                    Nodes.COORDINATE_Y + " REAL NOT NULL);";
 
 
     public static final String SQL_CREATE_LOCATIONS =

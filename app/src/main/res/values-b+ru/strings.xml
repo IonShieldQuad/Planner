@@ -86,7 +86,7 @@
     <string name="move_right">Направо</string>
     <string name="move_left">Налево</string>
     <string name="map_title">Карта</string>
-    <string name="heuristic_label">Эвристический параметр:</string>
+    <string name="heuristic_label">Жадность:</string>
     <string name="set_current_label">Задать тек. место</string>
     <string name="to_selected_button_label">Путь к узлу</string>
     <string name="no_current_position_message">Текущее местоположение не заданно</string>
@@ -94,7 +94,7 @@
     <string name="no_selected_node_message">Узел не выбран</string>
     <string name="display_markers_checkbox_label">Показывать маркеры</string>
     <string name="pathfinding_header">Нахождение пути</string>
-    <string name="heuristic_label_2">Эврисический параметр</string>
+    <string name="heuristic_label_2">Жадность</string>
     <string name="max_distance_label_2">Максимальная дистанция</string>
     <string name="map_header">Карта</string>
     <string name="map_background_color_label_2">Цвет фона</string>
