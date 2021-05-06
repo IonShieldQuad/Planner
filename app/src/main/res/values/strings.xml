@@ -194,4 +194,8 @@
     <string name="map_search_area_checkbox_label">Display search area</string>
     <string name="map_arrow_size_label_2">Arrow size</string>
     <string name="scale_label">"Scale: "</string>
+    <string name="current_plan_label">"Current plan: "</string>
+    <string name="current_plan_none">None</string>
+    <string name="list_button_label">List</string>
+    <string name="plan_button_label">Plan</string>
 </resources>

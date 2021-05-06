@@ -108,4 +108,8 @@
     <string name="map_search_area_checkbox_label">Показывать область поиска</string>
     <string name="map_arrow_size_label_2">Размер стрелок</string>
     <string name="scale_label">"Масштаб: "</string>
+    <string name="current_plan_label">"Текущий план: "</string>
+    <string name="current_plan_none">Не выбран</string>
+    <string name="list_button_label">Список</string>
+    <string name="plan_button_label">План</string>
 </resources>
