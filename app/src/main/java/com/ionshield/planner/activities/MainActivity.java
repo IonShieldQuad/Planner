@@ -32,10 +32,12 @@ public class MainActivity extends AppCompatActivity {
         db = helper.getReadableDatabase();
         //deleteDatabase("PlanningDatabase.db");
         updateText();
+
+
     }
 
     public void updateText() {
-        TextView currentPlanTextView = findViewById(R.id.selected_plan_name);
+        TextView currentPlanTextView = findViewById(R.id.current_plan_name);
         if (planId <= 0) {
             currentPlanTextView.setText(R.string.current_plan_none);
         }
@@ -102,5 +104,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra("mode", Modes.PLANS.mode);
         startActivity(intent);
+    }
+
+    public void planButtonClicked(View view) {
+
+        if (planId >= 0 && queryPlanName(planId) != null) {
+            Intent intent = new Intent(this, PlanMenuActivity.class);
+            intent.putExtra("planId", planId);
+            intent.putExtra("planName", queryPlanName(planId));
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, R.string.error_no_current_plan, Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -50,6 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
+                    android:onClick="planButtonClicked"
                     android:text="@string/plan_button_label"
                     android:textSize="30sp"/>
 
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:text="@string/current_plan_label"/>
             <TextView
-                android:id="@+id/selected_plan_name"
+                android:id="@+id/current_plan_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

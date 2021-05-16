@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ionshield.planner">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -8,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.PlanMenuActivity"></activity>
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.CustomMapActivity"></activity>
+        <activity android:name=".activities.CustomMapActivity" />
         <activity android:name=".activities.database.editors.LinksEditActivity" />
         <activity android:name=".activities.database.editors.LinkTypesEditActivity" />
         <activity android:name=".activities.database.editors.NodesEditActivity" />

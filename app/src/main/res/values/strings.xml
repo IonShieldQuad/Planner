@@ -198,4 +198,9 @@
     <string name="current_plan_none">None</string>
     <string name="list_button_label">List</string>
     <string name="plan_button_label">Plan</string>
+    <string name="plan_title">Plan</string>
+    <string name="error_no_current_plan">Error: No plan selected</string>
+    <string name="notes_button_label">Notes</string>
+    <string name="constraints_button_label">Constraints</string>
+    <string name="calendar_button_label">Calendar</string>
 </resources>
