@@ -12,7 +12,7 @@ import androidx.arch.core.util.Function;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.BaseAdapter;
-import com.ionshield.planner.activities.database.editors.ItemsEditActivity;
+import com.ionshield.planner.activities.database.editors.ItemEditActivity;
 import com.ionshield.planner.database.DBC;
 
 public class ItemsMode implements Mode {
@@ -23,7 +23,7 @@ public class ItemsMode implements Mode {
 
     @Override
     public Intent getEditorIntent(Context context, Integer id) {
-        Intent intent = new Intent(context, ItemsEditActivity.class);
+        Intent intent = new Intent(context, ItemEditActivity.class);
         if (id != null) {
             intent.putExtra("id", id);
         }

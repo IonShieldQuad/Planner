@@ -150,17 +150,17 @@
     <string name="links_button_label">Links</string>
     <string name="node_id_label">"Node: "</string>
     <string name="location_finder_button_label">Closest</string>
-    <string name="path_button_label">Path</string>
+    <string name="map_button_label">Map</string>
     <string name="pick_duration_label">Pick</string>
     <string name="minutes_short">m</string>
-    <string name="duration_label">"Duration: "</string>
+    <string name="duration_label">Duration (minutes):</string>
     <string name="minutes_long">minutes</string>
     <string name="speed_label">Speed: </string>
     <string name="to_node_label">To: </string>
     <string name="from_node_label">From: </string>
     <string name="width">Width: </string>
     <string name="speed">Speed: </string>
-    <string name="is_enabled_checkbox_label">"Enabled"</string>
+    <string name="is_enabled_checkbox_label">Enabled</string>
     <string name="link_types_title">Link Types</string>
     <string name="modifier_label">"Modifier: "</string>
     <string name="link_type_id_label">"Type: "</string>
@@ -203,4 +203,52 @@
     <string name="notes_button_label">Notes</string>
     <string name="constraints_button_label">Constraints</string>
     <string name="calendar_button_label">Calendar</string>
+    <string name="edit_map_title">Edit Map</string>
+    <string name="action_dark_mode">Dark Mode</string>
+    <string name="plan_not_selected">Plan not selected</string>
+    <string name="select_plan_tooltip">Select plan</string>
+    <string name="edit_plan_list_tooltip">Edit plan list</string>
+    <string name="data_button_label">Data</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="title_add_item">Add Item</string>
+    <string name="title_edit_item">Edit Item</string>
+    <string name="current_plan">Current plan</string>
+    <string name="color_red">Red:</string>
+    <string name="color_green">Green:</string>
+    <string name="color_blue">Blue:</string>
+    <string name="color_input_range_helper">0 – 255</string>
+    <string name="title_add_type">Add Type</string>
+    <string name="title_edit_type">Edit Type</string>
+    <string name="title_add_ref">Add Reference</string>
+    <string name="title_edit_ref">Edit Reference</string>
+    <string name="item_label">Item:</string>
+    <string name="type_label">Type:</string>
+    <string name="type_item_refs_title">References</string>
+    <string name="title_add_plan">Add plan</string>
+    <string name="title_edit_plan">Edit Plan</string>
+    <string name="notes_title">Notes</string>
+    <string name="content_label">Content:</string>
+    <string name="title_add_note">Add Note</string>
+    <string name="title_edit_note">Edit Note</string>
+    <string name="constraints_title">Constraints</string>
+    <string name="title_add_constraint">Add Constraint</string>
+    <string name="title_edit_constraint">EditConstraint</string>
+    <string name="time_min_hint">Time From:</string>
+    <string name="date_min_hint">Date From:</string>
+    <string name="time_max_hint">Time To:</string>
+    <string name="date_max_hint">Date To:</string>
+    <string name="title_add_event">Add Event</string>
+    <string name="title_edit_event">Edit Event</string>
+    <string name="time_parse_error">Invalid time format</string>
+    <string name="date_parse_error">Invalid date format</string>
+    <string name="delete">Delete</string>
+    <string name="edit_mode">Edit mode</string>
+    <string name="map_empty_node">Node</string>
+    <string name="title_add_location">Add Location</string>
+    <string name="title_edit_location">Edit Location</string>
+    <string-array name="data_titles">
+        <item>Items</item>
+        <item>Types</item>
+        <item>References</item>
+    </string-array>
 </resources>

@@ -1,89 +1,120 @@
 package com.ionshield.planner.activities;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ionshield.planner.PlannerApplication;
 import com.ionshield.planner.R;
-import com.ionshield.planner.activities.database.DatabaseMenuActivity;
-import com.ionshield.planner.activities.database.ListActivity;
-import com.ionshield.planner.activities.database.modes.Modes;
-import com.ionshield.planner.database.DBC;
-import com.ionshield.planner.database.DatabaseHelper;
+import com.ionshield.planner.fragments.DataTabFragment;
+import com.ionshield.planner.fragments.MapFragment;
+import com.ionshield.planner.fragments.PlanMenuFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private int planId = -1;
-    private DatabaseHelper helper;
-    private SQLiteDatabase db;
+    private int itemId;
+    //private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        helper = new DatabaseHelper(this);
-        db = helper.getReadableDatabase();
-        //deleteDatabase("PlanningDatabase.db");
-        updateText();
 
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
 
-    }
+            itemId = item.getItemId();
 
-    public void updateText() {
-        TextView currentPlanTextView = findViewById(R.id.current_plan_name);
-        if (planId <= 0) {
-            currentPlanTextView.setText(R.string.current_plan_none);
-        }
-        else {
-            String planName = queryPlanName(planId);
-            if (planName != null) {
-                currentPlanTextView.setText(planName);
+            if (item.getItemId() == R.id.item_plan_menu) {
+                PlanMenuFragment fragment = new PlanMenuFragment();
+                showTopLevelFragment(fragment);
+                return true;
             }
-            else {
-                currentPlanTextView.setText(R.string.current_plan_none);
+
+            if (item.getItemId() == R.id.item_map) {
+                MapFragment fragment = new MapFragment();
+                showTopLevelFragment(fragment);
+                return true;
             }
-        }
-    }
 
-    public String queryPlanName(int id) {
-        try {
-            Cursor cursor = db.rawQuery("SELECT * FROM " + DBC.Plans.TABLE_NAME + " WHERE " + DBC.Plans._ID + "=?;", new String[]{String.valueOf(id)});
+            if (item.getItemId() == R.id.item_data) {
+                //ListItemFragment fragment = new ListItemFragment(Mode.EDIT);
+                showTopLevelFragment(new DataTabFragment());
+                //fragment.setMode(Mode.SELECT_EDIT);
+                //this.fragment = fragment;
+                return true;
+            }
 
-            cursor.moveToFirst();
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(DBC.Types.NAME));
+            return false;
+        });
 
-            cursor.close();
-            return name;
-        }
-        catch (SQLException e) {
-            Toast.makeText(this, R.string.database_error_message, Toast.LENGTH_SHORT).show();
-        }
-        return null;
-    }
+        showTopLevelFragment(new PlanMenuFragment());
 
-    public void useButtonClicked(View view) {
-        Intent intent = new Intent(this, LocationFinderActivity.class);
-        startActivity(intent);
-    }
-
-    public void databaseButtonClicked(View view) {
-        Intent intent = new Intent(this, DatabaseMenuActivity.class);
-        startActivity(intent);
-    }
-
-    public void pathButtonClicked(View view) {
-        Intent intent = new Intent(this, CustomMapActivity.class);
-        startActivity(intent);
+        /*Item item = new Item();
+        item.itemId = 0;
+        item.name = "test";
+        PlannerRepository.getInstance().getItemDao().insertAll(item);*/
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("bottom_nav_item", itemId);
+        //getSupportFragmentManager().putFragment(outState, "current_fragment", fragment);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        /*fragment = getSupportFragmentManager().getFragment(savedInstanceState, "current_fragment");
+        if (fragment != null) {
+            showTopLevelFragment(fragment);
+        }*/
+        itemId = savedInstanceState.getInt("bottom_nav_item", 0);
+        if (itemId != 0) {
+            BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+            if (bottomNav != null) {
+                bottomNav.setSelectedItemId(itemId);
+            }
+        }
+    }
+
+    private void showTopLevelFragment(Fragment fragment) {
+        // Use the fragment manager to dynamically change the fragment displayed in the FrameLayout.
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_host, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.appbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        /*if (item.getItemId() == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }*/
+        if (item.getItemId() == R.id.action_dark_mode) {
+            PlannerApplication.getApplication().toggleDarkMode();
+        }
+        return true;
+    }
+
+
+
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
@@ -92,30 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 updateText();
             }
         }
-    }
+    }*/
 
-    public void planSelectButtonClicked(View view) {
-        Intent intent = new Intent(this, com.ionshield.planner.activities.database.ListActivity.class);
-        intent.putExtra("mode", Modes.PLANS.mode);
-        intent.putExtra("isSelector", true);
-        startActivityForResult(intent, 1);
-    }
-    public void planListButtonClicked(View view) {
-        Intent intent = new Intent(this, ListActivity.class);
-        intent.putExtra("mode", Modes.PLANS.mode);
-        startActivity(intent);
-    }
 
-    public void planButtonClicked(View view) {
-
-        if (planId >= 0 && queryPlanName(planId) != null) {
-            Intent intent = new Intent(this, PlanMenuActivity.class);
-            intent.putExtra("planId", planId);
-            intent.putExtra("planName", queryPlanName(planId));
-            startActivity(intent);
-        }
-        else {
-            Toast.makeText(this, R.string.error_no_current_plan, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

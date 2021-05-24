@@ -532,7 +532,7 @@ public class CustomMapView extends View {
                     canvas.drawCircle((float) sx, (float) sy, mNodeRadius, mPaint);
 
                     if (mDisplayMarkers && id == mCurrentNodeId) {
-                        Drawable drawable = getResources().getDrawable(R.drawable.ic_my_location_white_48dp);
+                        Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_settings_24);
                         drawable.setTint(0xFF000000 + mCurrMarkerColor);
                         drawable.setBounds((int) Math.round(sx - mNodeRadius * 1.5 - 10), (int) Math.round(sy - mNodeRadius * 1.5 - 10), (int) Math.round(sx + mNodeRadius * 1.5 + 10), (int) Math.round(sy + mNodeRadius * 1.5 + 10));
                         drawable.draw(canvas);
@@ -551,7 +551,7 @@ public class CustomMapView extends View {
                 double sx = absoluteToScreenX(x);
                 double sy = absoluteToScreenY(y);
 
-                Drawable drawable = getResources().getDrawable(R.drawable.ic_place_white_48dp);
+                Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_settings_24);
                 drawable.setTint(0xFF000000 + color);
                 drawable.setBounds((int) Math.round(sx - mNodeRadius * 1.5 - 10), (int) Math.round(sy - mNodeRadius * 3 - 20), (int) Math.round(sx + mNodeRadius * 1.5 + 10), (int) Math.round(sy));
                 drawable.draw(canvas);

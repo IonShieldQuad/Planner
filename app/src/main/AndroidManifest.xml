@@ -2,14 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ionshield.planner">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
+        android:name=".PlannerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PlanMenuActivity"></activity>
+
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity android:name=".activities.MapActivity" />
+        <activity android:name=".activities.PlanMenuActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.CustomMapActivity" />
         <activity android:name=".activities.database.editors.LinksEditActivity" />
@@ -23,7 +36,7 @@
         <activity android:name=".activities.database.editors.LocationsEditActivity" />
         <activity android:name=".activities.database.editors.ItemAssocEditActivity" />
         <activity android:name=".activities.database.editors.TypesEditActivity" />
-        <activity android:name=".activities.database.editors.ItemsEditActivity" />
+        <activity android:name=".activities.database.editors.ItemEditActivity" />
         <activity android:name=".activities.database.DatabaseMenuActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>

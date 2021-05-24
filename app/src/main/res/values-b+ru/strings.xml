@@ -64,17 +64,17 @@
     <string name="links_button_label">Связи</string>
     <string name="node_id_label">"Узел: "</string>
     <string name="location_finder_button_label">Найти ближ. </string>
-    <string name="path_button_label">Найти путь</string>
+    <string name="map_button_label">Карта</string>
     <string name="pick_duration_label">Выбрать</string>
     <string name="minutes_short">мин</string>
-    <string name="duration_label">"Длительность: "</string>
+    <string name="duration_label">Длительность (в минутах): </string>
     <string name="minutes_long">минут</string>
     <string name="speed_label">Скорость: </string>
     <string name="to_node_label">"До: "</string>
     <string name="from_node_label">"От: "</string>
     <string name="width">Ширина: </string>
     <string name="speed">Скорость: </string>
-    <string name="is_enabled_checkbox_label">"Включено"</string>
+    <string name="is_enabled_checkbox_label">Включено</string>
     <string name="link_types_title">Типы Связей</string>
     <string name="modifier_label">"Модификатор: "</string>
     <string name="link_type_id_label">"Тип: "</string>
@@ -117,4 +117,52 @@
     <string name="notes_button_label">Заметки</string>
     <string name="constraints_button_label">Ограничения</string>
     <string name="calendar_button_label">Календарь</string>
+    <string name="edit_map_title">Ред. Карту</string>
+    <string name="action_dark_mode">Темный режим</string>
+    <string name="plan_not_selected">План не выбран</string>
+    <string name="select_plan_tooltip">Выбрать план</string>
+    <string name="edit_plan_list_tooltip">Редактировать список планов</string>
+    <string name="data_button_label">Данные</string>
+    <string name="action_confirm">Подтвердить</string>
+    <string name="title_add_item">Добавить предмет</string>
+    <string name="title_edit_item">Изменить предмет</string>
+    <string name="current_plan">Текущий план</string>
+    <string name="color_red">"Красный: "</string>
+    <string name="color_green">Зеленый:</string>
+    <string name="color_blue">Синий:</string>
+    <string name="color_input_range_helper">0 – 255</string>
+    <string name="title_add_type">Добавить тип</string>
+    <string name="title_edit_type">Изменить тип</string>
+    <string name="title_add_ref">Добавить ссылку</string>
+    <string name="title_edit_ref">Изменить ссылку</string>
+    <string name="item_label">Предмет:</string>
+    <string name="type_label">Тип:</string>
+    <string name="type_item_refs_title">Ссылки</string>
+    <string name="title_add_plan">Добавить план</string>
+    <string name="title_edit_plan">Изменить план</string>
+    <string name="notes_title">Заметки</string>
+    <string name="content_label">Содержимое:</string>
+    <string name="title_add_note">Добавить заметку</string>
+    <string name="title_edit_note">Изменить заметку</string>
+    <string name="constraints_title">Ограничения</string>
+    <string name="title_add_constraint">Добавить ограничение</string>
+    <string name="title_edit_constraint">Изменить ограничение</string>
+    <string name="time_min_hint">Время от:</string>
+    <string name="date_min_hint">Дата от:</string>
+    <string name="time_max_hint">Время до:</string>
+    <string name="date_max_hint">Дата до:</string>
+    <string name="title_add_event">Добавить событие</string>
+    <string name="title_edit_event">Изменить события</string>
+    <string name="time_parse_error">Неверный формат времени</string>
+    <string name="date_parse_error">Неверный формат даты</string>
+    <string name="delete">Удалить</string>
+    <string name="edit_mode">Режим редактора</string>
+    <string name="map_empty_node">Узел</string>
+    <string name="title_add_location">Добавить локацию</string>
+    <string name="title_edit_location">Изменить локацию</string>
+    <string-array name="data_titles">
+        <item>Предметы</item>
+        <item>Типы</item>
+        <item>Ссылки</item>
+    </string-array>
 </resources>

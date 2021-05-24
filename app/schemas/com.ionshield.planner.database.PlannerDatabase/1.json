@@ -1,0 +1,697 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "5f5c05754e2117ade7b28bc4cdc96d27",
+    "entities": [
+      {
+        "tableName": "Plan",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`plan_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `description` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "planId",
+            "columnName": "plan_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "plan_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Plan_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Plan_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `content` TEXT, `plan_id` INTEGER NOT NULL, FOREIGN KEY(`plan_id`) REFERENCES `Plan`(`plan_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "noteId",
+            "columnName": "note_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "planId",
+            "columnName": "plan_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "note_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Note_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Note_name` ON `${TABLE_NAME}` (`name`)"
+          },
+          {
+            "name": "index_Note_plan_id",
+            "unique": false,
+            "columnNames": [
+              "plan_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Note_plan_id` ON `${TABLE_NAME}` (`plan_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Plan",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "plan_id"
+            ],
+            "referencedColumns": [
+              "plan_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Constraint",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`constraint_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `plan_id` INTEGER NOT NULL, `name` TEXT, `content` TEXT, FOREIGN KEY(`plan_id`) REFERENCES `Plan`(`plan_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "constraintId",
+            "columnName": "constraint_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planId",
+            "columnName": "plan_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "constraint_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Constraint_plan_id",
+            "unique": false,
+            "columnNames": [
+              "plan_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Constraint_plan_id` ON `${TABLE_NAME}` (`plan_id`)"
+          },
+          {
+            "name": "index_Constraint_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Constraint_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Plan",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "plan_id"
+            ],
+            "referencedColumns": [
+              "plan_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Event",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `plan_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `name` TEXT, `description` TEXT, `is_done` INTEGER NOT NULL, `datetime_min` TEXT, `datetime_max` TEXT, `is_date_used` INTEGER NOT NULL, `duration` INTEGER, FOREIGN KEY(`plan_id`) REFERENCES `Plan`(`plan_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`item_id`) REFERENCES `Item`(`item_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "eventId",
+            "columnName": "event_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planId",
+            "columnName": "plan_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isDone",
+            "columnName": "is_done",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "datetimeMin",
+            "columnName": "datetime_min",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "datetimeMax",
+            "columnName": "datetime_max",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isDateUsed",
+            "columnName": "is_date_used",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "event_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Event_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Event_name` ON `${TABLE_NAME}` (`name`)"
+          },
+          {
+            "name": "index_Event_datetime_min",
+            "unique": false,
+            "columnNames": [
+              "datetime_min"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Event_datetime_min` ON `${TABLE_NAME}` (`datetime_min`)"
+          },
+          {
+            "name": "index_Event_datetime_max",
+            "unique": false,
+            "columnNames": [
+              "datetime_max"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Event_datetime_max` ON `${TABLE_NAME}` (`datetime_max`)"
+          },
+          {
+            "name": "index_Event_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Event_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          },
+          {
+            "name": "index_Event_plan_id",
+            "unique": false,
+            "columnNames": [
+              "plan_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Event_plan_id` ON `${TABLE_NAME}` (`plan_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Plan",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "plan_id"
+            ],
+            "referencedColumns": [
+              "plan_id"
+            ]
+          },
+          {
+            "table": "Item",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "item_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `description` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "item_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Item_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Item_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `description` TEXT, `color` INTEGER NOT NULL, `marker` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "typeId",
+            "columnName": "type_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "marker",
+            "columnName": "marker",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "type_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Type_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Type_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Location",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`location_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `description` TEXT, `node_id` INTEGER, FOREIGN KEY(`node_id`) REFERENCES `Node`(`node_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "locationId",
+            "columnName": "location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nodeId",
+            "columnName": "node_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "location_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Location_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Location_name` ON `${TABLE_NAME}` (`name`)"
+          },
+          {
+            "name": "index_Location_node_id",
+            "unique": false,
+            "columnNames": [
+              "node_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Location_node_id` ON `${TABLE_NAME}` (`node_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Node",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "node_id"
+            ],
+            "referencedColumns": [
+              "node_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Node",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`node_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "nodeId",
+            "columnName": "node_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "node_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Node_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Node_name` ON `${TABLE_NAME}` (`name`)"
+          },
+          {
+            "name": "index_Node_longitude_latitude",
+            "unique": false,
+            "columnNames": [
+              "longitude",
+              "latitude"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Node_longitude_latitude` ON `${TABLE_NAME}` (`longitude`, `latitude`)"
+          },
+          {
+            "name": "index_Node_latitude_longitude",
+            "unique": false,
+            "columnNames": [
+              "latitude",
+              "longitude"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Node_latitude_longitude` ON `${TABLE_NAME}` (`latitude`, `longitude`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "type_item_ref",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type_item_ref_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, FOREIGN KEY(`type_id`) REFERENCES `Type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`item_id`) REFERENCES `Item`(`item_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "typeItemRefId",
+            "columnName": "type_item_ref_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typeId",
+            "columnName": "type_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "type_item_ref_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_type_item_ref_type_id",
+            "unique": false,
+            "columnNames": [
+              "type_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_type_item_ref_type_id` ON `${TABLE_NAME}` (`type_id`)"
+          },
+          {
+            "name": "index_type_item_ref_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_type_item_ref_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Type",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "type_id"
+            ],
+            "referencedColumns": [
+              "type_id"
+            ]
+          },
+          {
+            "table": "Item",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "item_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "location_type_ref",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`location_type_ref_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `location_id` INTEGER NOT NULL, `type_id` INTEGER NOT NULL, FOREIGN KEY(`location_id`) REFERENCES `Location`(`location_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type_id`) REFERENCES `Type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "LocationTypeRefId",
+            "columnName": "location_type_ref_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationId",
+            "columnName": "location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typeId",
+            "columnName": "type_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "location_type_ref_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_location_type_ref_location_id",
+            "unique": false,
+            "columnNames": [
+              "location_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_location_type_ref_location_id` ON `${TABLE_NAME}` (`location_id`)"
+          },
+          {
+            "name": "index_location_type_ref_type_id",
+            "unique": false,
+            "columnNames": [
+              "type_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_location_type_ref_type_id` ON `${TABLE_NAME}` (`type_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Location",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "location_id"
+            ],
+            "referencedColumns": [
+              "location_id"
+            ]
+          },
+          {
+            "table": "Type",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "type_id"
+            ],
+            "referencedColumns": [
+              "type_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f5c05754e2117ade7b28bc4cdc96d27')"
+    ]
+  }
+}

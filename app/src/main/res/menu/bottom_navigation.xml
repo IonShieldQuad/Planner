@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_plan_menu"
+        android:title="@string/plan_button_label"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_event_note_24"/>
+    <item
+        android:id="@+id/item_map"
+        android:title="@string/map_button_label"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_map_24"/>
+    <item
+        android:id="@+id/item_data"
+        android:title="@string/data_button_label"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_storage_24"/>
+
+
+</menu>

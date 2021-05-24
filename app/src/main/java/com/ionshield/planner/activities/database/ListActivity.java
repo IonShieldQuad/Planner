@@ -1,9 +1,6 @@
 
 package com.ionshield.planner.activities.database;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.arch.core.util.Function;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +14,9 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.arch.core.util.Function;
 
 import com.ionshield.planner.R;
 import com.ionshield.planner.activities.database.modes.Mode;
@@ -46,7 +46,7 @@ public class ListActivity extends AppCompatActivity {
         titleView.setText(mode.getTitleRes());
 
         if (isSelector) {
-            Button button = findViewById(R.id.button);
+            Button button = findViewById(R.id.add_button);
             button.setVisibility(View.GONE);
             button.setEnabled(false);
         }

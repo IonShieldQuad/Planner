@@ -2,7 +2,7 @@ package com.ionshield.planner.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,10 +22,10 @@ public class PlanMenuActivity extends AppCompatActivity {
         planId = intent.getIntExtra("planId", -1);
         planName = intent.getStringExtra("planName");
 
-        updateText();
+        //updateText();
     }
 
-    public void updateText() {
+    /*public void updateText() {
         TextView currentPlanTextView = findViewById(R.id.current_plan_name);
         if (planId <= 0) {
             currentPlanTextView.setText(R.string.current_plan_none);
@@ -38,5 +38,10 @@ public class PlanMenuActivity extends AppCompatActivity {
                 currentPlanTextView.setText(R.string.current_plan_none);
             }
         }
+    }*/
+
+
+    public void eventsButtonClicked(View view) {
+
     }
 }
