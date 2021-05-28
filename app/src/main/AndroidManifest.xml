@@ -21,23 +21,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
-        <activity android:name=".activities.MapActivity" />
-        <activity android:name=".activities.PlanMenuActivity" />
-        <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.CustomMapActivity" />
-        <activity android:name=".activities.database.editors.LinksEditActivity" />
-        <activity android:name=".activities.database.editors.LinkTypesEditActivity" />
-        <activity android:name=".activities.database.editors.NodesEditActivity" />
-        <activity android:name=".activities.LocationFinderActivity" />
-        <activity android:name=".activities.database.editors.EventAssocEditActivity" />
-        <activity android:name=".activities.database.editors.PlansEditActivity" />
-        <activity android:name=".activities.database.editors.EventsEditActivity" />
-        <activity android:name=".activities.database.ListActivity" />
-        <activity android:name=".activities.database.editors.LocationsEditActivity" />
-        <activity android:name=".activities.database.editors.ItemAssocEditActivity" />
-        <activity android:name=".activities.database.editors.TypesEditActivity" />
-        <activity android:name=".activities.database.editors.ItemEditActivity" />
-        <activity android:name=".activities.database.DatabaseMenuActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
