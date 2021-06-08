@@ -20,5 +20,5 @@ public class TypeWithLocationsAndNodes {
             entityColumn = "location_id",
             associateBy = @Junction(LocationTypeRef.class)
     )
-    public List<LocationAndNode> locationAndNode;
+    public List<LocationAndNode> locationsAndNodes;
 }

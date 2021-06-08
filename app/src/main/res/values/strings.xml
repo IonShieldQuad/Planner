@@ -246,6 +246,7 @@
     <string name="map_empty_node">Node</string>
     <string name="title_add_location">Add Location</string>
     <string name="title_edit_location">Edit Location</string>
+    <string name="schedule_title">Schedule</string>
     <string-array name="data_titles">
         <item>Items</item>
         <item>Types</item>

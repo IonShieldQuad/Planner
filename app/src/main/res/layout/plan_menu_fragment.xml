@@ -132,5 +132,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/optimize_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            app:icon="@drawable/ic_baseline_double_arrow_48"
+            style="@style/Widget.App.Button.IconOnly"
+            />
+
     </LinearLayout>
 </FrameLayout>
