@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,10 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.maps.model.LatLng;
 import com.ionshield.planner.R;
+import com.ionshield.planner.fragments.MapFragment;
+import com.ionshield.planner.math.EventWithDateTimeData;
+import com.ionshield.planner.math.PlanOptimizer;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ScheduleFragment extends Fragment {
 
@@ -91,6 +97,36 @@ public class ScheduleFragment extends Fragment {
         MaterialToolbar appBar = root.findViewById(R.id.app_bar);
         appBar.setNavigationOnClickListener(l -> getParentFragmentManager().popBackStack());
         appBar.setVisibility(mShowToolbar ? View.VISIBLE : View.GONE);
+        appBar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_map) {
+
+                PlanOptimizer.Result result =  mModel.getResult().getValue();
+                if (result != null) {
+                    List<EventWithDateTimeData> events = result.data;
+                    List<Double> data = new ArrayList<>();
+                    data.add(result.origin.lat);
+                    data.add(result.origin.lng);
+                    if (events != null) {
+                        for (EventWithDateTimeData event : events) {
+                            data.add(event.location.node.latitude);
+                            data.add(event.location.node.longitude);
+                        }
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        MapFragment map = MapFragment.newInstance(data);
+                        fragmentManager.beginTransaction()
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .add(android.R.id.content, map)
+                                .addToBackStack(null)
+                                .commit();
+                        return true;
+
+                    }
+
+                }
+            }
+
+            return false;
+        });
 
         // Set the adapter
         if (recyclerView != null) {
@@ -127,6 +163,14 @@ public class ScheduleFragment extends Fragment {
                 bar.setIndeterminate(false);
                 bar.setVisibility(View.VISIBLE);
                 bar.setProgress((int)Math.round(progress * 100), true);
+            }
+
+            if (progress == null || progress < 1) {
+                appBar.getMenu().clear();
+            }
+            else {
+                appBar.getMenu().clear();
+                appBar.inflateMenu(R.menu.schedule_appbar_menu);
             }
         });
 

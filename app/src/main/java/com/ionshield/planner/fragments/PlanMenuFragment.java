@@ -153,6 +153,7 @@ public class PlanMenuFragment extends Fragment {
                     FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
                     if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+                        Toast.makeText(requireActivity(), R.string.location_disabled_message, Toast.LENGTH_SHORT).show();
                     }
                     else {
                         fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
@@ -165,6 +166,13 @@ public class PlanMenuFragment extends Fragment {
                                         .addToBackStack(null)
                                         .commit();
                             }
+                            else {
+                                Toast.makeText(requireActivity(), R.string.location_error_message, Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(l -> {
+                            Toast.makeText(requireActivity(), R.string.location_error_message, Toast.LENGTH_SHORT).show();
+                        }).addOnCanceledListener(() -> {
+                            Toast.makeText(requireActivity(), R.string.location_error_message, Toast.LENGTH_SHORT).show();
                         });
                     }
 
