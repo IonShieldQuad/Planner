@@ -247,6 +247,8 @@
     <string name="title_add_location">Add Location</string>
     <string name="title_edit_location">Edit Location</string>
     <string name="schedule_title">Schedule</string>
+    <string name="location_disabled_message">Please, allow location access</string>
+    <string name="location_error_message">Current location not available</string>
     <string-array name="data_titles">
         <item>Items</item>
         <item>Types</item>

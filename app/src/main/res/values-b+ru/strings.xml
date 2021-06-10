@@ -161,6 +161,8 @@
     <string name="title_add_location">Добавить локацию</string>
     <string name="title_edit_location">Изменить локацию</string>
     <string name="schedule_title">Расписание</string>
+    <string name="location_disabled_message">Пожалуйста, разрешите доступ к местоположению</string>
+    <string name="location_error_message">Текущее местоположение недоступно</string>
     <string-array name="data_titles">
         <item>Предметы</item>
         <item>Типы</item>
