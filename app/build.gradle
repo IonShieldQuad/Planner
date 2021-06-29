@@ -7,10 +7,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\ionsh\\Keystores\\debug.jks')
-            storePassword 'Hexag0n'
-            keyAlias 'debug'
-            keyPassword 'Hexag0n'
+            storeFile file(keyStorePath)
+            storePassword keyStorePassword
+            keyAlias projectKeyAlias
+            keyPassword projectKeyPassword
         }
     }
     compileSdkVersion 30
@@ -66,7 +66,7 @@ dependencies {
     implementation("com.google.guava:guava:30.1.1-android")
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     def room_version = "2.3.0"
 
