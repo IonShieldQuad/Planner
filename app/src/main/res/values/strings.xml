@@ -217,6 +217,12 @@
     <string name="color_green">Green:</string>
     <string name="color_blue">Blue:</string>
     <string name="color_input_range_helper">0 – 255</string>
+    <string name="color_picker_dialog">Color picker</string>
+    <string name="color_value_red">Red: %d</string>
+    <string name="color_value_green">Green: %d</string>
+    <string name="color_value_blue">Blue: %d</string>
+    <string name="button_ok" translatable="false">OK</string>
+    <string name="button_cancel">Cancel</string>
     <string name="title_add_type">Add Type</string>
     <string name="title_edit_type">Edit Type</string>
     <string name="title_add_ref">Add Reference</string>

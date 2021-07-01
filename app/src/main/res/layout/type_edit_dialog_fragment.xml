@@ -146,6 +146,18 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pick_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    app:icon="@drawable/ic_baseline_color_lens_48"
+                    style="@style/Widget.App.Button.IconOnly"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_margin="10dp"
+                    android:gravity="center" />
+
             </LinearLayout>
 
 

@@ -1,6 +1,7 @@
 package com.ionshield.planner.fragments.edit;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ionshield.planner.InputFilterMinMax;
 import com.ionshield.planner.R;
+import com.ionshield.planner.database.entities.Type;
 
 public class TypeEditDialog extends DialogFragment {
     private TypeEditDialogViewModel mViewModel;
@@ -171,6 +174,20 @@ public class TypeEditDialog extends DialogFragment {
 
         TextView colorView = root.findViewById(R.id.color);
 
+        Button pickColorButton = root.findViewById(R.id.pick_button);
+        pickColorButton.setOnClickListener(v -> {
+            ColorPicker colorPicker = new ColorPicker(c -> {
+                mViewModel.setRed(c.getRed());
+                mViewModel.setGreen(c.getGreen());
+                mViewModel.setBlue(c.getBlue());
+            });
+
+            Type type = mViewModel.getType().getValue();
+            if (type != null)
+                colorPicker.setColor(type.color);
+            colorPicker.showDialog(requireContext());
+        });
+
         mViewModel.getType().observe(getViewLifecycleOwner(), type -> {
             if (!nameField.hasFocus()) {
                 nameField.setText(type.name);
@@ -216,4 +233,8 @@ public class TypeEditDialog extends DialogFragment {
         return dialog;
 
     }
+
+    private static final DialogInterface.OnShowListener colorPickerShowListener = di -> {
+
+    };
 }

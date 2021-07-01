@@ -131,6 +131,11 @@
     <string name="color_green">Зеленый:</string>
     <string name="color_blue">Синий:</string>
     <string name="color_input_range_helper">0 – 255</string>
+    <string name="color_picker_dialog">Выбор цвета</string>
+    <string name="color_value_red">Красный: %d</string>
+    <string name="color_value_green">Зеленый: %d</string>
+    <string name="color_value_blue">Синий: %d</string>
+    <string name="button_cancel">Отмена</string>
     <string name="title_add_type">Добавить тип</string>
     <string name="title_edit_type">Изменить тип</string>
     <string name="title_add_ref">Добавить ссылку</string>
